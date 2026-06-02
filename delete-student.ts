@@ -1,0 +1,1 @@
+import { doc, deleteDoc } from "firebase/firestore"; import { db } from "./src/services/firebase.ts"; async function run() { console.log("?? Initializing profile deletion for std_001..."); const ref = doc(db, "users", "std_001"); await deleteDoc(ref); console.log("? Success! Rahul (std_001) has been permanently removed from the database."); } run().catch(console.error);
