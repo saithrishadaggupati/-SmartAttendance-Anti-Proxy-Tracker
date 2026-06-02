@@ -1,91 +1,67 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { useAuth } from './contexts/AuthContext';
-import { LoginForm } from './components/auth/LoginForm';
-import { MainLayout } from './components/layout/MainLayout';
-import { ProtectedRoute } from './components/auth/ProtectedRoute';
-import AdminDashboard from './pages/admin/AdminDashboard';
-import { FacultyDashboard } from './pages/faculty/FacultyDashboard';
-import { StudentDashboard } from './pages/student/StudentDashboard';
-import { FacultyManagement } from './pages/admin/FacultyManagement';
-import { StudentManagement } from './pages/admin/StudentManagement';
-import { CourseManagement } from './pages/admin/CourseManagement';
-import { EnrollmentManagement } from './pages/admin/EnrollmentManagement';
-import { NotFound } from './pages/shared/NotFound';
+import React, { useState } from "react";
+import StudentCheckIn from "./components/StudentCheckIn";
+import ProfessorDashboard from "./components/ProfessorDashboard";
 
-function App() {
-  const { currentUser, role } = useAuth();
+export default function App() {
+  // A simple view switcher so you can test both interfaces easily on localhost
+  const [currentView, setCurrentView] = useState<"student" | "professor">("student");
 
   return (
-    <Router>
-      <Routes>
-        {/* Login Route */}
-        <Route
-          path="/login"
-          element={
-            currentUser
-              ? <Navigate to={`/${role}`} replace />
-              : <LoginForm />
-          }
-        />
+    <div>
+      {/* Quick Environment Switcher Header for testing */}
+      <div style={{
+        display: "flex",
+        justifyContent: "center",
+        gap: "12px",
+        padding: "10px",
+        backgroundColor: "#e2e8f0",
+        borderBottom: "1px solid #cbd5e1"
+      }}>
+        <span style={{ fontSize: "0.9rem", fontWeight: "bold", alignSelf: "center", color: "#475569" }}>
+          🔄 Environment Simulator:
+        </span>
+        <button
+          onClick={() => setCurrentView("student")}
+          style={{
+            padding: "6px 12px",
+            borderRadius: "4px",
+            border: "1px solid #cbd5e1",
+            cursor: "pointer",
+            fontWeight: "bold",
+            backgroundColor: currentView === "student" ? "#fff" : "transparent",
+            color: currentView === "student" ? "#0070f3" : "#475569",
+            boxShadow: currentView === "student" ? "0 1px 2px rgba(0,0,0,0.05)" : "none"
+          }}
+        >
+          📱 Student Device
+        </button>
+        <button
+          onClick={() => setCurrentView("professor")}
+          style={{
+            padding: "6px 12px",
+            borderRadius: "4px",
+            border: "1px solid #cbd5e1",
+            cursor: "pointer",
+            fontWeight: "bold",
+            backgroundColor: currentView === "professor" ? "#fff" : "transparent",
+            color: currentView === "professor" ? "#2563eb" : "#475569",
+            boxShadow: currentView === "professor" ? "0 1px 2px rgba(0,0,0,0.05)" : "none"
+          }}
+        >
+          👨‍🏫 Professor Screen
+        </button>
+      </div>
 
-        {/* Protected Routes */}
-        <Route element={<ProtectedRoute />}>
-          {role && (
-            <Route
-              path="/"
-              element={<Navigate to={`/${role}`} replace />}
-            />
-          )}
-
-          {/* Admin Routes */}
-          <Route
-            path="/admin"
-            element={<ProtectedRoute allowedRoles={['admin']} />}
-          >
-            <Route element={<MainLayout />}>
-              <Route index element={<AdminDashboard />} />
-              <Route path="faculty" element={<FacultyManagement />} />
-              <Route path="users" element={<StudentManagement />} />
-              <Route path="courses" element={<CourseManagement />} />
-              <Route path="enrollments" element={<EnrollmentManagement />} />
-              <Route
-                path="settings"
-                element={
-                  <div style={{ padding: '20px' }}>
-                    <h2>Settings Page</h2>
-                    <p>Settings module coming soon.</p>
-                  </div>
-                }
-              />
-            </Route>
-          </Route>
-
-          {/* Faculty Routes */}
-          <Route
-            path="/faculty"
-            element={<ProtectedRoute allowedRoles={['faculty']} />}
-          >
-            <Route element={<MainLayout />}>
-              <Route index element={<FacultyDashboard />} />
-            </Route>
-          </Route>
-
-          {/* Student Routes */}
-          <Route
-            path="/student"
-            element={<ProtectedRoute allowedRoles={['student']} />}
-          >
-            <Route element={<MainLayout />}>
-              <Route index element={<StudentDashboard />} />
-            </Route>
-          </Route>
-        </Route>
-
-        {/* 404 Route */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </Router>
+      {/* Conditionally rendering our anti-proxy layout views */}
+      <main>
+        {currentView === "student" ? (
+          <div style={{ marginTop: "40px" }}>
+            <StudentCheckIn />
+          </div>
+        ) : (
+          <ProfessorDashboard />
+        )}
+      </main>
+    </div>
   );
 }
-
-export default App;
