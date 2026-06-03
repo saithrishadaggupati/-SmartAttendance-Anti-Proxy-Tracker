@@ -97,13 +97,13 @@ export default function LoginForm() {
             boxShadow: '0 10px 20px rgba(99, 102, 241, 0.2)',
             marginBottom: '16px'
           }}>
-            PG
+            SA
           </div>
           <h2 style={{ fontSize: '24px', fontWeight: 900, color: '#ffffff', margin: 0, letterSpacing: '-0.5px' }}>
-            ProxyGuard Gateway
+            SmartAttendance
           </h2>
           <p style={{ fontSize: '12px', color: '#94a3b8', marginTop: '6px', fontWeight: 500 }}>
-            Anti-Spoof Satellite Attendance Registry Verification
+            Anti-Proxy Verification Gateway
           </p>
         </div>
 
