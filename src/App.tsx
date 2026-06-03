@@ -2,7 +2,7 @@ import './index.css';
 import React from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import LoginForm from './components/LoginForm';
-import StudentCheckIn from './components/StudentCheckIn';
+import StudentDashboard from './components/StudentDashboard';
 import ProfessorDashboard from './components/ProfessorDashboard';
 
 function NavigationWrapper() {
@@ -15,15 +15,15 @@ function NavigationWrapper() {
 
   return (
     <div className="min-h-screen bg-slate-900 text-slate-100 antialiased selection:bg-indigo-500/30 flex flex-col">
-      {/* Premium Humanized Global Top Navigation Strip */}
+      {/* Premium Global Top Navigation Strip */}
       <nav className="border-b border-slate-800/60 bg-slate-950/40 backdrop-blur-md sticky top-0 z-50 px-6 py-4">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <div className="flex items-center gap-3">
             <div className="h-8 w-8 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-500/20 text-sm">
-              PG
+              SA
             </div>
             <div>
-              <h1 className="text-sm font-black tracking-wider text-white uppercase">ProxyGuard Engine</h1>
+              <h1 className="text-sm font-black tracking-wider text-white uppercase">Smart Attendance</h1>
               <p className="text-[10px] font-mono text-slate-500 uppercase tracking-tight">Active Identity Authentication Node</p>
             </div>
           </div>
@@ -45,7 +45,8 @@ function NavigationWrapper() {
 
       {/* Main Core Viewport Container */}
       <main className="flex-1 max-w-7xl w-full mx-auto p-4 md:p-8">
-        {user.role === 'student' ? <StudentCheckIn /> : <ProfessorDashboard />}
+        {/* Switched from old StudentCheckIn to our new premium StudentDashboard */}
+        {user.role === 'student' ? <StudentDashboard /> : <ProfessorDashboard />}
       </main>
     </div>
   );
