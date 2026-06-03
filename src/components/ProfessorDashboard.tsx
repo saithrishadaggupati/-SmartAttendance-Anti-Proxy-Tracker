@@ -4,9 +4,8 @@ import { useAuth } from '../contexts/AuthContext';
 export default function ProfessorDashboard() {
   const { user, logout } = useAuth();
   const [isSyncing, setIsSyncing] = useState(false);
-  const [syncLog, setSyncLog] = useState('All faculty telemetry tracks fully synchronized.');
+  const [syncLog, setSyncLog] = useState('Camera array ready for QR intake matrix scans.');
 
-  // Fixed Roster: Removed the 5x repeating department names and replaced with distinct Course Codes
   const facultyRoster = [
     { id: "EXEC//01", name: "Director BUBU", code: "CSE-401 (Core)", role: "Advanced Operating Systems", status: "Secure Core" },
     { id: "EXEC//02", name: "Director BUBU", code: "CSE-403 (Core)", role: "Distributed Cloud Architecture", status: "Secure Core" },
@@ -16,131 +15,53 @@ export default function ProfessorDashboard() {
     { id: "EXEC//06", name: "BUDU", code: "ECE-301 (Elect)", role: "Other Dept Head // Digital Electronics", status: "Active External" }
   ];
 
-  const triggerTelemetrySync = () => {
+  const handleQRScanSimulation = () => {
     setIsSyncing(true);
-    setSyncLog('Querying cluster logs for administrative node validation...');
-    
+    setSyncLog('Opening hardware camera feeds... Scanning incoming authentication QR token...');
     setTimeout(() => {
-      setSyncLog('Sync complete. Mapped 3 distinct tracks for BUBU, 2 for DUDU, and 1 for BUDU without text repetition.');
+      setSyncLog('✓ QR Code Verification Decrypted Successful: Node token mapped to internal directory.');
       setIsSyncing(false);
     }, 2000);
   };
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      backgroundColor: '#0f172a',
-      color: '#ffffff',
-      fontFamily: 'system-ui, -apple-system, sans-serif',
-      padding: '40px 24px',
-      position: 'relative',
-      overflow: 'hidden'
-    }}>
-      <div style={{
-        position: 'absolute',
-        top: '-10%',
-        left: '10%',
-        width: '400px',
-        height: '400px',
-        backgroundColor: 'rgba(168, 85, 247, 0.1)',
-        borderRadius: '50%',
-        filter: 'blur(100px)',
-        pointerEvents: 'none'
-      }} />
-
-      {/* Top Header */}
-      <div style={{
-        maxWidth: '950px',
-        margin: '0 auto 32px auto',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        borderBottom: '1px solid #1e293b',
-        paddingBottom: '20px'
-      }}>
-        <div>
-          <h1 style={{ fontSize: '22px', fontWeight: 800, margin: 0, letterSpacing: '0.5px' }}>
-            Smart Attendance
-          </h1>
-          <p style={{ fontSize: '12px', color: '#a855f7', margin: '4px 0 0 0', fontFamily: 'monospace', fontWeight: 'bold' }}>
-            CORE // FACULTY ARBITRATION VIEW
-          </p>
-        </div>
-        <button
-          onClick={logout}
-          style={{
-            backgroundColor: 'rgba(239, 68, 68, 0.1)',
-            border: '1px solid rgba(239, 68, 68, 0.2)',
-            color: '#f87171',
-            padding: '8px 16px',
-            borderRadius: '10px',
-            fontSize: '12px',
-            fontWeight: '600',
-            cursor: 'pointer'
-          }}
-        >
-          Disconnect Terminal
-        </button>
-      </div>
-
-      <main style={{ maxWidth: '950px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+    <div style={{ color: '#ffffff', fontFamily: 'system-ui, sans-serif' }}>
+      <main style={{ maxWidth: '1000px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '24px' }}>
         
-        {/* Core Synchronization Analytics */}
-        <div style={{
-          backgroundColor: 'rgba(15, 23, 42, 0.6)',
-          backdropFilter: 'blur(20px)',
-          border: '1px solid #1e293b',
-          borderRadius: '16px',
-          padding: '24px',
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr 1fr',
-          gap: '20px'
-        }}>
-          <div>
-            <span style={{ fontSize: '10px', fontFamily: 'monospace', color: '#64748b', textTransform: 'uppercase', display: 'block' }}>Active Administration Terminal</span>
-            <div style={{ fontSize: '15px', fontWeight: 'bold', color: '#f8fafc', marginTop: '4px' }}>{user?.email || 'bubu@nitk.edu.in'}</div>
-          </div>
-          <div>
-            <span style={{ fontSize: '10px', fontFamily: 'monospace', color: '#64748b', textTransform: 'uppercase', display: 'block' }}>Directory State Summary</span>
-            <div style={{ fontSize: '14px', color: '#e2e8f0', marginTop: '4px' }}>
-              Monitored Nodes: <strong style={{ color: '#ffffff' }}>6 Mapped Assignments</strong>
+        {/* Top Analytics Panel and Live Cam Scan Widget */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: '24px' }}>
+          
+          {/* Administrative Summary Track */}
+          <div style={{ backgroundColor: 'rgba(15, 23, 42, 0.6)', border: '1px solid #1e293b', borderRadius: '16px', padding: '24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '16px' }}>
+            <div>
+              <span style={{ fontSize: '10px', fontFamily: 'monospace', color: '#64748b' }}>ACTIVE BUBU UNIVERSITY CONSOLE</span>
+              <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#f8fafc', marginTop: '4px' }}>{user?.email || 'director.bubu@bubu.edu.in'}</div>
+              <p style={{ fontSize: '13px', color: '#94a3b8', margin: '6px 0 0 0' }}>Institutional Course Distribution Split: <strong>BUBU (3), DUDU (2), BUDU (1)</strong></p>
+            </div>
+            <div style={{ backgroundColor: '#090d16', border: '1px solid #1e293b', padding: '12px 16px', borderRadius: '10px', fontFamily: 'monospace', fontSize: '12px', color: '#a855f7' }}>
+              <span style={{ color: '#64748b' }}>Hardware Log:</span> {syncLog}
             </div>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-            <button
-              onClick={triggerTelemetrySync}
-              disabled={isSyncing}
-              style={{
-                backgroundColor: '#6366f1',
-                color: '#ffffff',
-                border: 'none',
-                padding: '10px 18px',
-                borderRadius: '10px',
-                fontSize: '13px',
-                fontWeight: 'bold',
-                cursor: 'pointer',
-                boxShadow: '0 4px 12px rgba(99, 102, 241, 0.2)'
-              }}
-            >
-              {isSyncing ? 'Syncing Map...' : '🔄 Sync Hardware Feed'}
-            </button>
-          </div>
 
-          <div style={{ gridColumn: 'span 3', backgroundColor: '#090d16', border: '1px solid #1e293b', padding: '12px 16px', borderRadius: '10px', fontFamily: 'monospace', fontSize: '12px', color: '#a855f7' }}>
-            <span style={{ color: '#64748b' }}>System Registry Trace:</span> {syncLog}
+          {/* Interactive QR Camera Scanner Mock Block */}
+          <div style={{ backgroundColor: 'rgba(15, 23, 42, 0.6)', border: '1px solid #1e293b', borderRadius: '16px', padding: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyBox: 'center', gap: '12px' }}>
+            <span style={{ fontSize: '11px', fontFamily: 'monospace', color: '#64748b' }}>⚡ FACULTY QR AUTH INTENTION</span>
+            
+            {/* Simulated Scanning Viewport Frame */}
+            <div style={{ width: '100%', height: '110px', backgroundColor: '#020617', borderRadius: '12px', border: '2px dashed #a855f7', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+              <div style={{ width: '100%', height: '2px', backgroundColor: '#a855f7', position: 'absolute', top: '50%', left: 0, shadow: '0 0 10px #a855f7', animation: 'none' }} />
+              <span style={{ fontSize: '11px', fontFamily: 'monospace', color: '#475569', zIndex: 5 }}>[ HARDWARE CAMERA VIEWPORT ]</span>
+            </div>
+
+            <button onClick={handleQRScanSimulation} disabled={isSyncing} style={{ width: '100%', backgroundColor: '#a855f7', border: 'none', color: '#fff', padding: '8px 12px', borderRadius: '10px', fontSize: '12px', fontWeight: 'bold', cursor: 'pointer' }}>
+              {isSyncing ? 'Processing Scan Matrix...' : '📷 Trigger Quick QR Reader Scan'}
+            </button>
           </div>
         </div>
 
-        {/* Structural Matrix Logs */}
-        <div style={{
-          backgroundColor: 'rgba(2, 6, 23, 0.7)',
-          border: '1px solid #334155',
-          borderRadius: '20px',
-          padding: '28px',
-          overflowX: 'auto'
-        }}>
-          <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 20px 0' }}>Department Structural Authority Map</h3>
-          
+        {/* Structural Matrix Logs Grid Table */}
+        <div style={{ backgroundColor: 'rgba(2, 6, 23, 0.7)', border: '1px solid #334155', borderRadius: '20px', padding: '28px', overflowX: 'auto' }}>
+          <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 20px 0' }}>Bubu University Department Structural Authority Map</h3>
           <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '14px' }}>
             <thead>
               <tr style={{ borderBottom: '1px solid #1e293b', color: '#64748b', fontFamily: 'monospace', fontSize: '11px', textTransform: 'uppercase' }}>
@@ -159,16 +80,7 @@ export default function ProfessorDashboard() {
                   <td style={{ padding: '14px 8px', fontFamily: 'monospace', fontSize: '13px', color: '#6366f1', fontWeight: 'bold' }}>{staff.code}</td>
                   <td style={{ padding: '14px 8px', color: '#e2e8f0' }}>{staff.role}</td>
                   <td style={{ padding: '14px 8px', textAlign: 'right' }}>
-                    <span style={{
-                      display: 'inline-block',
-                      fontSize: '11px',
-                      fontWeight: 'bold',
-                      padding: '4px 10px',
-                      borderRadius: '8px',
-                      backgroundColor: staff.status === 'Secure Core' ? 'rgba(52, 211, 153, 0.1)' : 'rgba(129, 140, 248, 0.1)',
-                      color: staff.status === 'Secure Core' ? '#34d399' : '#818cf8',
-                      border: staff.status === 'Secure Core' ? '1px solid rgba(52, 211, 153, 0.2)' : '1px solid rgba(129, 140, 248, 0.2)'
-                    }}>
+                    <span style={{ display: 'inline-block', fontSize: '11px', fontWeight: 'bold', padding: '4px 10px', borderRadius: '8px', backgroundColor: staff.status === 'Secure Core' ? 'rgba(52, 211, 153, 0.1)' : 'rgba(129, 140, 248, 0.1)', color: staff.status === 'Secure Core' ? '#34d399' : '#818cf8', border: staff.status === 'Secure Core' ? '1px solid rgba(52, 211, 153, 0.2)' : '1px solid rgba(129, 140, 248, 0.2)' }}>
                       {staff.status.toUpperCase()}
                     </span>
                   </td>

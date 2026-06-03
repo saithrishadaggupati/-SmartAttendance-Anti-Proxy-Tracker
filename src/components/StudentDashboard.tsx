@@ -3,246 +3,96 @@ import { useAuth } from '../contexts/AuthContext';
 
 export default function StudentDashboard() {
   const { user, logout } = useAuth();
-  const [status, setStatus] = useState<'idle' | 'scanning' | 'verified' | 'failed'>('idle');
-  const [log, setLog] = useState<string>('Handshake array standing by. Broadcast signature required.');
+  const [status, setStatus] = useState<'idle' | 'scanning' | 'verified'>('idle');
+  const [log, setLog] = useState<string>('Biometric telemetry array standing by.');
   
-  // Custom Academic State Metrics aligned with your updated department roles
   const academicData = {
     course: "Computer Science Engineering Core (CSE-401)",
     instructor: "Director BUBU (Head of Department)",
     counselor: "DUDU (PA of BUBU / Dept Counselor)",
     daysAttended: 38,
     totalWorkingDays: 50,
-    daysRemaining: 12,
     requiredPercentage: 75
   };
 
-  const standardPercentage = Math.round((academicData.daysAttended / academicData.totalWorkingDays) * 100);
-  const isShortage = standardPercentage < academicData.requiredPercentage;
-
   const handleVerify = () => {
     setStatus('scanning');
-    setLog('Initializing secure telemetry handshakes...');
-    
-    setTimeout(() => {
-      setLog('Querying campus anti-proxy geolocation nodes...');
-    }, 1200);
-
+    setLog('Analyzing webcam facial matrices & processing image validation hash...');
     setTimeout(() => {
       setStatus('verified');
-      setLog('Identity presence confirmed inside 100m proximity boundary. Attendance logged!');
-    }, 2800);
+      setLog('✓ Image Match 99.4% Verified. Attendance Signature successfully logged!');
+    }, 2500);
   };
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      backgroundColor: '#0f172a',
-      color: '#ffffff',
-      fontFamily: 'system-ui, -apple-system, sans-serif',
-      padding: '40px 24px',
-      position: 'relative',
-      overflow: 'hidden'
-    }}>
-      {/* Background Glow */}
-      <div style={{
-        position: 'absolute',
-        top: '-10%',
-        right: '10%',
-        width: '400px',
-        height: '400px',
-        backgroundColor: 'rgba(99, 102, 241, 0.12)',
-        borderRadius: '50%',
-        filter: 'blur(100px)',
-        pointerEvents: 'none'
-      }} />
-
-      {/* Navigation Header */}
-      <div style={{
-        maxWidth: '800px',
-        margin: '0 auto 32px auto',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        borderBottom: '1px solid #1e293b',
-        paddingBottom: '20px'
-      }}>
-        <div>
-          <h1 style={{ fontSize: '22px', fontWeight: 800, margin: 0, letterSpacing: '0.5px' }}>
-            Smart Attendance
-          </h1>
-          <p style={{ fontSize: '12px', color: '#64748b', margin: '4px 0 0 0', fontFamily: 'monospace' }}>
-            NODE // STUDENT GATEWAY
-          </p>
-        </div>
-        <button
-          onClick={logout}
-          style={{
-            backgroundColor: 'rgba(239, 68, 68, 0.1)',
-            border: '1px solid rgba(239, 68, 68, 0.2)',
-            color: '#f87171',
-            padding: '8px 16px',
-            borderRadius: '10px',
-            fontSize: '12px',
-            fontWeight: '600',
-            cursor: 'pointer'
-          }}
-        >
-          Disconnect Node
-        </button>
-      </div>
-
+    <div style={{ color: '#ffffff', fontFamily: 'system-ui, sans-serif' }}>
       <main style={{ maxWidth: '800px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '24px' }}>
         
-        {/* Account Identification Banner */}
-        <div style={{
-          backgroundColor: 'rgba(15, 23, 42, 0.6)',
-          border: '1px solid #1e293b',
-          borderRadius: '16px',
-          padding: '20px 24px',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '16px'
-        }}>
-          <div style={{
-            width: '42px',
-            height: '42px',
-            borderRadius: '12px',
-            backgroundColor: '#3b82f6',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '18px'
-          }}>
-            👤
+        {/* Profile Card with Mock Image Verification Status */}
+        <div style={{ backgroundColor: 'rgba(15, 23, 42, 0.6)', border: '1px solid #1e293b', borderRadius: '16px', padding: '24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+            {/* Simulated Live Webcam / Image Preview Box */}
+            <div style={{ width: '64px', height: '64px', borderRadius: '12px', backgroundColor: '#1e293b', border: '2px solid #3b82f6', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}>
+              <span style={{ fontSize: '24px' }}>👤</span>
+              <div style={{ position: 'absolute', bottom: 0, width: '100%', backgroundColor: 'rgba(59, 130, 246, 0.8)', color: '#fff', fontSize: '8px', textAlign: 'center', fontFamily: 'monospace' }}>CAM LIVE</div>
+            </div>
+            <div>
+              <p style={{ fontSize: '11px', fontFamily: 'monospace', color: '#64748b', margin: 0 }}>BUBU UNIVERSITY VERIFIED ACCOUNT</p>
+              <p style={{ fontSize: '16px', fontWeight: 600, color: '#f1f5f9', margin: '2px 0 0 0' }}>{user?.email || 'student@bubu.edu.in'}</p>
+            </div>
           </div>
-          <div>
-            <p style={{ fontSize: '11px', textTransform: 'uppercase', color: '#64748b', margin: 0, fontFamily: 'monospace' }}>
-              Authorized Account Signature
-            </p>
-            <p style={{ fontSize: '15px', fontWeight: 600, color: '#f1f5f9', margin: '2px 0 0 0' }}>
-              {user?.email || 'aarav@nitk.edu.in'}
-            </p>
-          </div>
+          <span style={{ fontSize: '11px', fontFamily: 'monospace', backgroundColor: 'rgba(52, 211, 153, 0.1)', color: '#34d399', border: '1px solid rgba(52, 211, 153, 0.2)', padding: '6px 12px', borderRadius: '8px' }}>
+            ✓ IMAGE PASSED
+          </span>
         </div>
 
-        {/* Academic Roster Layout */}
-        <div style={{
-          backgroundColor: 'rgba(15, 23, 42, 0.4)',
-          border: '1px solid #1e293b',
-          borderRadius: '16px',
-          padding: '24px',
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: '20px'
-        }}>
-          <div style={{ gridColumn: 'span 2' }}>
-            <span style={{ fontSize: '10px', fontFamily: 'monospace', color: '#64748b', textTransform: 'uppercase', display: 'block', marginBottom: '4px' }}>Active Enrolled Course</span>
-            <div style={{ fontSize: '15px', fontWeight: 'bold', color: '#f8fafc' }}>{academicData.course}</div>
-            <div style={{ fontSize: '13px', color: '#94a3b8', marginTop: '6px' }}>
-              Instructor: <span style={{ color: '#6366f1', fontWeight: 600 }}>{academicData.instructor}</span>
-            </div>
-            <div style={{ fontSize: '12px', color: '#94a3b8', marginTop: '4px' }}>
-              Counseling Contact: <span style={{ color: '#a855f7', fontWeight: 500 }}>{academicData.counselor}</span>
-            </div>
-          </div>
-
-          <div style={{ borderTop: '1px solid #1e293b', paddingTop: '16px' }}>
-            <span style={{ fontSize: '10px', fontFamily: 'monospace', color: '#64748b', textTransform: 'uppercase', display: 'block', marginBottom: '4px' }}>Attendance Matrix</span>
-            <div style={{ fontSize: '14px', color: '#e2e8f0' }}>
-              Days Attended: <strong style={{ color: '#f1f5f9' }}>{academicData.daysAttended}</strong> / {academicData.totalWorkingDays}
-            </div>
-            <div style={{ fontSize: '12px', color: '#94a3b8', marginTop: '4px' }}>
-              Timeline Balance: <span style={{ color: '#fbbf24', fontWeight: 500 }}>{academicData.daysRemaining} days remaining</span>
-            </div>
-          </div>
-
-          <div style={{ borderTop: '1px solid #1e293b', paddingTop: '16px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+        {/* Dashboard Panels Split: Course Details and Dynamic QR Code Generation */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 260px', gap: '24px' }}>
+          
+          {/* Left Block: Course Details */}
+          <div style={{ backgroundColor: 'rgba(15, 23, 42, 0.4)', border: '1px solid #1e293b', borderRadius: '16px', padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <div>
-              <span style={{ fontSize: '10px', fontFamily: 'monospace', color: '#64748b', textTransform: 'uppercase', display: 'block', marginBottom: '4px' }}>Registry Standing</span>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ fontSize: '18px', fontWeight: 'bold', color: isShortage ? '#f87171' : '#34d399' }}>
-                  {standardPercentage}%
-                </span>
-                <span style={{ fontSize: '11px', color: '#64748b' }}>Req: {academicData.requiredPercentage}%</span>
-              </div>
+              <span style={{ fontSize: '10px', fontFamily: 'monospace', color: '#64748b', display: 'block' }}>ENROLLED COURSE TRACK</span>
+              <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#f8fafc', marginTop: '4px' }}>{academicData.course}</div>
+              <div style={{ fontSize: '13px', color: '#94a3b8', marginTop: '6px' }}>Instructor: <span style={{ color: '#6366f1', fontWeight: 600 }}>{academicData.instructor}</span></div>
+              <div style={{ fontSize: '12px', color: '#94a3b8', marginTop: '2px' }}>Counselor: <span style={{ color: '#a855f7' }}>{academicData.counselor}</span></div>
             </div>
+            <div style={{ borderTop: '1px solid #1e293b', paddingTop: '14px' }}>
+              <span style={{ fontSize: '10px', fontFamily: 'monospace', color: '#64748b', display: 'block' }}>ATTENDANCE METRIC</span>
+              <div style={{ fontSize: '14px', marginTop: '4px' }}>Logged Matrix Balance: <strong>{academicData.daysAttended} / {academicData.totalWorkingDays} Days</strong> (76%)</div>
+            </div>
+          </div>
+
+          {/* Right Block: Dynamic QR Generation Token */}
+          <div style={{ backgroundColor: 'rgba(15, 23, 42, 0.4)', border: '1px solid #1e293b', borderRadius: '16px', padding: '24px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
+            <span style={{ fontSize: '10px', fontFamily: 'monospace', color: '#64748b', marginBottom: '12px', display: 'block' }}>PERSONAL ATTENDANCE QR</span>
             
-            {isShortage ? (
-              <div style={{ fontSize: '11px', color: '#f87171', backgroundColor: 'rgba(239, 68, 68, 0.08)', border: '1px solid rgba(239, 68, 68, 0.15)', padding: '4px 8px', borderRadius: '6px', width: 'fit-content', marginTop: '6px' }}>
-                ⚠️ CRITICAL SHORTAGE ALERT
+            {/* Interactive Grid-based CSS Mock QR Code */}
+            <div style={{ padding: '8px', backgroundColor: '#ffffff', borderRadius: '12px', display: 'inline-block' }}>
+              <div style={{ width: '120px', height: '120px', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gridTemplateRows: 'repeat(4, 1fr)', gap: '4px' }}>
+                <div style={{ backgroundColor: '#000' }} /><div style={{ backgroundColor: '#000' }} /><div style={{ backgroundColor: '#fff' }} /><div style={{ backgroundColor: '#000' }} />
+                <div style={{ backgroundColor: '#fff' }} /><div style={{ backgroundColor: '#000' }} /><div style={{ backgroundColor: '#000' }} /><div style={{ backgroundColor: '#fff' }} />
+                <div style={{ backgroundColor: '#000' }} /><div style={{ backgroundColor: '#fff' }} /><div style={{ backgroundColor: '#000' }} /><div style={{ backgroundColor: '#000' }} />
+                <div style={{ backgroundColor: '#000' }} /><div style={{ backgroundColor: '#000' }} /><div style={{ backgroundColor: '#fff' }} /><div style={{ backgroundColor: '#000' }} />
               </div>
-            ) : (
-              <div style={{ fontSize: '11px', color: '#34d399', backgroundColor: 'rgba(52, 211, 153, 0.08)', border: '1px solid rgba(52, 211, 153, 0.15)', padding: '4px 8px', borderRadius: '6px', width: 'fit-content', marginTop: '6px' }}>
-                ✓ Standing Verified Secure
-              </div>
-            )}
+            </div>
+            <p style={{ fontSize: '9px', fontFamily: 'monospace', color: '#64748b', margin: '8px 0 0 0' }}>REFRESHES EVERY 30S</p>
           </div>
         </div>
 
-        {/* Verification Engine */}
-        <div style={{
-          backgroundColor: 'rgba(2, 6, 23, 0.7)',
-          backdropFilter: 'blur(20px)',
-          border: '1px solid #334155',
-          borderRadius: '20px',
-          padding: '32px'
-        }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '24px' }}>
-            <div>
-              <h3 style={{ fontSize: '18px', fontWeight: 700, margin: 0 }}>Satellite Hardware Validation</h3>
-              <p style={{ fontSize: '13px', color: '#94a3b8', margin: '4px 0 0 0' }}>Enforcing 100m Classroom Proximity Boundary</p>
-            </div>
-            <span style={{
-              fontSize: '11px',
-              fontFamily: 'monospace',
-              backgroundColor: status === 'verified' ? 'rgba(34, 197, 94, 0.1)' : 'rgba(99, 102, 241, 0.1)',
-              color: status === 'verified' ? '#4ade80' : '#818cf8',
-              border: status === 'verified' ? '1px solid rgba(34, 197, 94, 0.2)' : '1px solid rgba(99, 102, 241, 0.2)',
-              padding: '4px 10px',
-              borderRadius: '20px',
-              fontWeight: 'bold'
-            }}>
-              ● SYSTEM ENGAGED
-            </span>
-          </div>
-
-          <div style={{
-            backgroundColor: '#090d16',
-            border: '1px solid #1e293b',
-            borderRadius: '12px',
-            padding: '16px 20px',
-            fontFamily: 'monospace',
-            fontSize: '13px',
-            color: status === 'verified' ? '#4ade80' : '#94a3b8',
-            lineHeight: '1.6',
-            marginBottom: '24px'
-          }}>
+        {/* Live Facial Tracking Hardware Form Terminal */}
+        <div style={{ backgroundColor: 'rgba(2, 6, 23, 0.7)', border: '1px solid #334155', borderRadius: '20px', padding: '32px' }}>
+          <h3 style={{ fontSize: '18px', fontWeight: 700, margin: 0 }}>Faculty Hardware & Image Validation</h3>
+          <p style={{ fontSize: '13px', color: '#94a3b8', margin: '4px 0 24px 0' }}>Processes dual-layer spatial image matrices for security check-in.</p>
+          
+          <div style={{ backgroundColor: '#090d16', border: '1px solid #1e293b', borderRadius: '12px', padding: '16px 20px', fontFamily: 'monospace', fontSize: '13px', color: status === 'verified' ? '#4ade80' : '#94a3b8', marginBottom: '24px' }}>
             <span style={{ color: '#6366f1', marginRight: '8px' }}>&gt;</span> {log}
           </div>
 
-          <button
-            onClick={handleVerify}
-            disabled={status === 'scanning' || status === 'verified'}
-            style={{
-              width: '100%',
-              padding: '14px',
-              background: status === 'verified' 
-                ? 'linear-gradient(to right, #10b981, #059669)' 
-                : 'linear-gradient(to right, #3b82f6, #1d4ed8)',
-              color: '#ffffff',
-              fontWeight: 'bold',
-              fontSize: '14px',
-              border: 'none',
-              borderRadius: '12px',
-              cursor: status === 'verified' ? 'default' : 'pointer',
-              transition: 'all 0.2s',
-              boxShadow: '0 4px 12px rgba(59, 130, 246, 0.2)'
-            }}
-          >
-            {status === 'idle' && 'Broadcast Location & Sign Attendance'}
-            {status === 'scanning' && 'Scanning Telemetry Framework...'}
-            {status === 'verified' && '✓ Verification Signature Secured'}
+          <button onClick={handleVerify} disabled={status === 'scanning' || status === 'verified'} style={{ width: '100%', padding: '14px', background: status === 'verified' ? 'linear-gradient(to right, #10b981, #059669)' : 'linear-gradient(to right, #3b82f6, #1d4ed8)', color: '#ffffff', fontWeight: 'bold', fontSize: '14px', border: 'none', borderRadius: '12px', cursor: 'pointer' }}>
+            {status === 'idle' && 'Verify Facial Scan & Register Entry'}
+            {status === 'scanning' && 'Running Image Vector Matching algorithms...'}
+            {status === 'verified' && '✓ Verification Node Locked'}
           </button>
         </div>
       </main>
