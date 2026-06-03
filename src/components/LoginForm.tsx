@@ -80,7 +80,8 @@ export default function LoginForm() {
           background: 'linear-gradient(to right, transparent, #6366f1, #a855f7, transparent)'
         }} />
         
-        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+        {/* Un-mingled Header Section */}
+        <div style={{ textAlign: 'center', marginBottom: '36px' }}>
           <div style={{
             width: '48px',
             height: '48px',
@@ -93,19 +94,20 @@ export default function LoginForm() {
             color: '#ffffff',
             fontSize: '18px',
             boxShadow: '0 10px 20px rgba(99, 102, 241, 0.2)',
-            marginBottom: '16px'
+            marginBottom: '20px'
           }}>
             SA
           </div>
-          <h2 style={{ fontSize: '24px', fontWeight: 900, color: '#ffffff', margin: 0, letterSpacing: '-0.5px' }}>
+          <h2 style={{ fontSize: '26px', fontWeight: 800, color: '#ffffff', margin: '0 0 10px 0', letterSpacing: '0.5px' }}>
             SmartAttendance
           </h2>
-          <p style={{ fontSize: '12px', color: '#94a3b8', marginTop: '6px', fontWeight: 500 }}>
+          <p style={{ fontSize: '13px', color: '#94a3b8', margin: 0, fontWeight: 500, letterSpacing: '0.2px', lineHeight: '1.5' }}>
             Anti-Proxy Verification Gateway
           </p>
         </div>
 
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+          {/* Authorization Selector */}
           <div>
             <label style={{ fontSize: '10px', fontFamily: 'monospace', color: '#64748b', textTransform: 'uppercase', display: 'block', marginBottom: '10px' }}>
               Gate Authorization Target
@@ -148,6 +150,7 @@ export default function LoginForm() {
             </div>
           </div>
 
+          {/* Email Signature Field */}
           <div>
             <label style={{ fontSize: '10px', fontFamily: 'monospace', color: '#64748b', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>
               University Email Signature
@@ -177,6 +180,7 @@ export default function LoginForm() {
             </p>
           )}
 
+          {/* Gateway Action Button */}
           <button
             type="submit"
             disabled={isLoading}
