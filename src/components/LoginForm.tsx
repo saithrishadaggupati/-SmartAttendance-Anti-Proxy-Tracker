@@ -23,48 +23,128 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4 relative overflow-hidden font-sans">
-      {/* Soft natural background flares */}
-      <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-purple-600/10 rounded-full blur-3xl pointer-events-none" />
+    <div style={{
+      minHeight: '100vh',
+      backgroundColor: '#0f172a',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '24px',
+      fontFamily: 'system-ui, -apple-system, sans-serif',
+      position: 'relative',
+      overflow: 'hidden'
+    }}>
+      {/* Premium Ambient Background Glows */}
+      <div style={{
+        position: 'absolute',
+        top: '20%',
+        left: '20%',
+        width: '300px',
+        height: '300px',
+        backgroundColor: 'rgba(99, 102, 241, 0.15)',
+        borderRadius: '50%',
+        filter: 'blur(80px)',
+        pointerEvents: 'none'
+      }} />
+      <div style={{
+        position: 'absolute',
+        bottom: '20%',
+        right: '20%',
+        width: '300px',
+        height: '300px',
+        backgroundColor: 'rgba(147, 51, 234, 0.12)',
+        borderRadius: '50%',
+        filter: 'blur(80px)',
+        pointerEvents: 'none'
+      }} />
 
-      <div className="w-full max-w-md bg-slate-950/60 backdrop-blur-xl border border-slate-800/80 rounded-[2rem] p-6 md:p-8 shadow-2xl relative">
-        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-indigo-500/40 to-transparent" />
+      {/* Main Glassmorphic Card Container */}
+      <div style={{
+        width: '100%',
+        maxWidth: '420px',
+        backgroundColor: 'rgba(2, 6, 23, 0.7)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        border: '1px solid rgba(51, 65, 85, 0.8)',
+        borderRadius: '24px',
+        padding: '40px 32px',
+        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
+        position: 'relative'
+      }}>
+        {/* Top Accent Line */}
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: '10%',
+          right: '10%',
+          height: '2px',
+          background: 'linear-gradient(to right, transparent, #6366f1, #a855f7, transparent)'
+        }} />
         
-        <div className="text-center mb-8">
-          <div className="inline-flex h-12 w-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 items-center justify-center font-bold text-white shadow-xl shadow-indigo-500/10 text-lg mb-4">
+        {/* Header Section */}
+        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+          <div style={{
+            inlineSize: '48px',
+            blockSize: '48px',
+            borderRadius: '14px',
+            background: 'linear-gradient(135deg, #6366f1, #4f46e5)',
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontWeight: 'bold',
+            color: '#ffffff',
+            fontSize: '18px',
+            boxShadow: '0 10px 20px rgba(99, 102, 241, 0.2)',
+            marginBottom: '16px'
+          }}>
             PG
           </div>
-          <h2 className="text-2xl font-black text-white tracking-tight">ProxyGuard Gateway</h2>
-          <p className="text-xs text-slate-400 mt-1.5 font-medium">Anti-Spoof Satellite Attendance Registry Verification</p>
+          <h2 style={{ fontSize: '24px', fontWeight: 900, color: '#ffffff', margin: 0, letterSpacing: '-0.5px' }}>
+            ProxyGuard Gateway
+          </h2>
+          <p style={{ fontSize: '12px', color: '#94a3b8', marginTop: '6px', fontWeight: 500 }}>
+            Anti-Spoof Satellite Attendance Registry Verification
+          </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Target Toggle Selection Deck */}
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+          {/* Role Selection Toggle */}
           <div>
-            <label className="text-[10px] font-mono tracking-widest text-slate-500 uppercase block mb-2.5">
+            <label style={{ fontSize: '10px', fontFamily: 'monospace', tracking: '1px', color: '#64748b', textTransform: 'uppercase', display: 'block', marginBottom: '10px' }}>
               Gate Authorization Target
             </label>
-            <div className="grid grid-cols-2 gap-3 bg-slate-900/60 border border-slate-800/60 p-1.5 rounded-xl">
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', backgroundColor: '#090d16', border: '1px solid #1e293b', padding: '6px', borderRadius: '14px' }}>
               <button
                 type="button"
                 onClick={() => setRole('student')}
-                className={`py-2 px-3 rounded-lg text-xs font-bold transition-all duration-150 ${
-                  role === 'student'
-                    ? 'bg-indigo-600 text-white shadow-md'
-                    : 'text-slate-400 hover:text-slate-200'
-                }`}
+                style={{
+                  padding: '10px',
+                  borderRadius: '10px',
+                  fontSize: '12px',
+                  fontWeight: 'bold',
+                  border: 'none',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                  backgroundColor: role === 'student' ? '#4f46e5' : 'transparent',
+                  color: role === 'student' ? '#ffffff' : '#64748b'
+                }}
               >
                 📱 Student Node
               </button>
               <button
                 type="button"
                 onClick={() => setRole('professor')}
-                className={`py-2 px-3 rounded-lg text-xs font-bold transition-all duration-150 ${
-                  role === 'professor'
-                    ? 'bg-indigo-600 text-white shadow-md'
-                    : 'text-slate-400 hover:text-slate-200'
-                }`}
+                style={{
+                  padding: '10px',
+                  borderRadius: '10px',
+                  fontSize: '12px',
+                  fontWeight: 'bold',
+                  border: 'none',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                  backgroundColor: role === 'professor' ? '#4f46e5' : 'transparent',
+                  color: role === 'professor' ? '#ffffff' : '#64748b'
+                }}
               >
                 📊 Faculty Core
               </button>
@@ -73,7 +153,7 @@ export default function LoginForm() {
 
           {/* Email Input Node */}
           <div>
-            <label className="text-[10px] font-mono tracking-widest text-slate-500 uppercase block mb-2">
+            <label style={{ fontSize: '10px', fontFamily: 'monospace', color: '#64748b', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>
               University Email Signature
             </label>
             <input
@@ -81,23 +161,48 @@ export default function LoginForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder={role === 'student' ? 'aarav@nitk.edu.in' : 'bubu@nitk.edu.in'}
-              className="w-full bg-slate-900/50 border border-slate-800 focus:border-indigo-500/80 rounded-xl px-4 py-3 text-sm text-slate-200 placeholder:text-slate-600 focus:outline-none transition-colors"
+              style={{
+                width: '100%',
+                backgroundColor: 'rgba(15, 23, 42, 0.6)',
+                border: '1px solid #1e293b',
+                borderRadius: '12px',
+                padding: '12px 16px',
+                fontSize: '14px',
+                color: '#f8fafc',
+                outline: 'none',
+                boxSizing: 'border-box',
+                transition: 'border-color 0.2s'
+              }}
+              onFocus={(e) => e.target.style.borderColor = '#6366f1'}
+              onBlur={(e) => e.target.style.borderColor = '#1e293b'}
             />
           </div>
 
           {errorMsg && (
-            <p className="text-xs font-mono font-medium text-rose-400 bg-rose-500/5 border border-rose-500/10 p-3 rounded-xl">
+            <p style={{ fontSize: '12px', fontFamily: 'monospace', color: '#f87171', backgroundColor: 'rgba(239, 68, 68, 0.05)', border: '1px solid rgba(239, 68, 68, 0.2)', padding: '12px', borderRadius: '12px', margin: 0 }}>
               ⚠️ {errorMsg}
             </p>
           )}
 
-          {/* Submit Action Block */}
+          {/* Action Submission Button */}
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-3.5 px-4 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold tracking-wide text-sm rounded-xl transition-all duration-200 active:scale-[0.98] disabled:opacity-50 shadow-xl shadow-indigo-600/10"
+            style={{
+              width: '100%',
+              padding: '14px',
+              background: 'linear-gradient(to right, #4f46e5, #6366f1)',
+              color: '#ffffff',
+              fontWeight: 'bold',
+              fontSize: '14px',
+              border: 'none',
+              borderRadius: '12px',
+              cursor: 'pointer',
+              transition: 'all 0.2s',
+              boxShadow: '0 4px 12px rgba(79, 70, 229, 0.2)'
+            }}
           >
-            {isLoading ? 'Syncing Network Handshake...' : `Initialize Access as ${role === 'student' ? 'Student' : 'Professor'}`}
+            {isLoading ? 'Syncing Handshake Module...' : `Initialize Access as ${role === 'student' ? 'Student' : 'Professor'}`}
           </button>
         </form>
       </div>
