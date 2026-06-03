@@ -1,269 +1,171 @@
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
-import { useAuth } from '../../contexts/AuthContext';
-import { BookOpen, Eye, EyeOff, Loader2 } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
 
-const loginSchema = z.object({
-  email: z.string().email('Please enter a valid university email'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
-});
+export default function LoginForm() {
+  const { login, isLoading } = useAuth();
+  const [email, setEmail] = useState('');
+  const [role, setRole] = useState<'student' | 'professor'>('student');
+  const [errorMsg, setErrorMsg] = useState('');
 
-type LoginFormValues = z.infer<typeof loginSchema>;
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorMsg('');
+    
+    if (!email.trim()) {
+      setErrorMsg('Please enter a valid university email node access signature.');
+      return;
+    }
 
-export const LoginForm: React.FC = () => {
-  const { login } = useAuth();
-  const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
-  });
-
-  const onSubmit = async (data: LoginFormValues) => {
-    try {
-      setError(null);
-      setIsLoading(true);
-      await login(data.email, data.password);
-    } catch (err: any) {
-      setError(err.message || 'Failed to sign in. Please check your credentials.');
-    } finally {
-      setIsLoading(false);
+    const success = await login(email, role);
+    if (!success) {
+      setErrorMsg('Authorization failed. Unrecognized campus directory signature.');
     }
   };
 
   return (
-    <div className="login-page">
-      <div className="login-card">
-        <div className="login-header">
-          <div className="login-logo">
-            <BookOpen size={40} className="text-primary" />
+    <div style={{
+      minHeight: '100vh',
+      backgroundColor: '#0f172a',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '24px',
+      fontFamily: 'system-ui, -apple-system, sans-serif',
+      position: 'relative',
+      overflow: 'hidden'
+    }}>
+      {/* Premium Ambient Background Glows */}
+      <div style={{
+        position: 'absolute',
+        top: '20%',
+        left: '20%',
+        width: '300px',
+        height: '300px',
+        backgroundColor: 'rgba(99, 102, 241, 0.15)',
+        borderRadius: '50%',
+        filter: 'blur(80px)',
+        pointerEvents: 'none'
+      }} />
+      <div style={{
+        position: 'absolute',
+        bottom: '20%',
+        right: '20%',
+        width: '300px',
+        height: '300px',
+        backgroundColor: 'rgba(147, 51, 234, 0.12)',
+        borderRadius: '50%',
+        filter: 'blur(80px)',
+        pointerEvents: 'none'
+      }} />
+
+      {/* Main Glassmorphic Card Container */}
+      <div style={{
+        width: '100%',
+        maxWidth: '440px',
+        backgroundColor: 'rgba(2, 6, 23, 0.7)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        border: '1px solid rgba(51, 65, 85, 0.8)',
+        borderRadius: '24px',
+        padding: '40px 32px',
+        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
+        position: 'relative'
+      }}>
+        {/* Top Accent Line */}
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: '10%',
+          right: '10%',
+          height: '2px',
+          background: 'linear-gradient(to right, transparent, #6366f1, #a855f7, transparent)'
+        }} />
+        
+        {/* Header Section */}
+        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontWeight: 'bold',
+            color: '#ffffff',
+            fontSize: '18px',
+            background: 'linear-gradient(135deg, #6366f1, #4f46e5)',
+            padding: '6px 14px',
+            borderRadius: '10px',
+            boxShadow: '0 10px 20px rgba(99, 102, 241, 0.2)',
+            marginBottom: '16px'
+          }}>
+            SA
           </div>
-          <h1>SmartAttendance</h1>
-          <p>University Management System</p>
+          <h2 style={{ fontSize: '22px', fontWeight: 900, color: '#ffffff', margin: 0, letterSpacing: '-0.5px' }}>
+            SmartAttendance
+          </h2>
+          <p style={{ fontSize: '12px', color: '#94a3b8', marginTop: '6px', fontWeight: 500 }}>
+            Anti-Proxy Tracker Gateway
+          </p>
         </div>
 
-        {error && (
-          <div className="error-alert">
-            {error}
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit(onSubmit)} className="login-form">
-          <div className="form-group">
-            <label htmlFor="email">University Email</label>
-            <input
-              id="email"
-              type="email"
-              placeholder="e.g. s12345@university.edu"
-              {...register('email')}
-              className={errors.email ? 'input-error' : ''}
-            />
-            {errors.email && <span className="field-error">{errors.email.message}</span>}
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <div className="password-input-wrapper">
-              <input
-                id="password"
-                type={showPassword ? 'text' : 'password'}
-                placeholder="••••••••"
-                {...register('password')}
-                className={errors.password ? 'input-error' : ''}
-              />
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+          {/* Role Selection Toggle */}
+          <div>
+            <label style={{ fontSize: '10px', fontFamily: 'monospace', color: '#64748b', textTransform: 'uppercase', display: 'block', marginBottom: '10px', letterSpacing: '1px' }}>
+              Gate Authorization Target
+            </label>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', backgroundColor: '#090d16', border: '1px solid #1e293b', padding: '6px', borderRadius: '14px' }}>
               <button
                 type="button"
-                className="password-toggle"
-                onClick={() => setShowPassword(!showPassword)}
+                onClick={() => setRole('student')}
+                style={{
+                  padding: '10px',
+                  borderRadius: '10px',
+                  fontSize: '12px',
+                  fontWeight: 'bold',
+                  border: 'none',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                  backgroundColor: role === 'student' ? '#4f46e5' : 'transparent',
+                  color: role === 'student' ? '#ffffff' : '#64748b'
+                }}
               >
-                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                📱 Student Node
+              </button>
+              <button
+                type="button"
+                onClick={() => setRole('professor')}
+                style={{
+                  padding: '10px',
+                  borderRadius: '10px',
+                  fontSize: '12px',
+                  fontWeight: 'bold',
+                  border: 'none',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                  backgroundColor: role === 'professor' ? '#4f46e5' : 'transparent',
+                  color: role === 'professor' ? '#ffffff' : '#64748b'
+                }}
+              >
+                📊 Faculty Core
               </button>
             </div>
-            {errors.password && <span className="field-error">{errors.password.message}</span>}
           </div>
 
-          <div className="form-options">
-            <label className="checkbox-label">
-              <input type="checkbox" />
-              <span>Remember me</span>
+          {/* Email Input Node */}
+          <div>
+            <label style={{ fontSize: '10px', fontFamily: 'monospace', color: '#64748b', textTransform: 'uppercase', display: 'block', marginBottom: '8px', letterSpacing: '1px' }}>
+              University Email Signature
             </label>
-            <a href="#" className="forgot-password">Forgot password?</a>
-          </div>
-
-          <button type="submit" className="btn btn-primary login-btn" disabled={isLoading}>
-            {isLoading ? (
-              <>
-                <Loader2 size={18} className="animate-spin" />
-                <span>Signing in...</span>
-              </>
-            ) : (
-              'Sign In'
-            )}
-          </button>
-        </form>
-
-        <div className="login-footer">
-          <p>Don't have an account? Contact your department administrator.</p>
-        </div>
-      </div>
-
-      <style>{`
-        .login-page {
-          min-height: 100vh;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background-color: #f1f5f9;
-          padding: 1.5rem;
-        }
-
-        .login-card {
-          background: white;
-          width: 100%;
-          max-width: 440px;
-          padding: 2.5rem;
-          border-radius: 12px;
-          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        }
-
-        .login-header {
-          text-align: center;
-          margin-bottom: 2rem;
-        }
-
-        .login-logo {
-          margin-bottom: 1rem;
-          display: flex;
-          justify-content: center;
-        }
-
-        .login-header h1 {
-          font-size: 1.75rem;
-          margin-bottom: 0.25rem;
-        }
-
-        .login-header p {
-          color: var(--text-muted);
-          font-size: 0.875rem;
-        }
-
-        .error-alert {
-          background-color: #fef2f2;
-          border: 1px solid #fee2e2;
-          color: #991b1b;
-          padding: 0.75rem;
-          border-radius: 6px;
-          font-size: 0.875rem;
-          margin-bottom: 1.5rem;
-        }
-
-        .login-form {
-          display: flex;
-          flex-direction: column;
-          gap: 1.25rem;
-        }
-
-        .form-group {
-          display: flex;
-          flex-direction: column;
-          gap: 0.5rem;
-        }
-
-        .form-group label {
-          font-size: 0.875rem;
-          font-weight: 500;
-          color: var(--text-main);
-        }
-
-        .form-group input {
-          padding: 0.625rem 0.875rem;
-          border: 1px solid var(--border);
-          border-radius: 6px;
-          font-size: 0.875rem;
-          transition: border-color 0.2s;
-        }
-
-        .form-group input:focus {
-          outline: none;
-          border-color: var(--primary);
-          box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-
-        .input-error {
-          border-color: #ef4444 !important;
-        }
-
-        .field-error {
-          font-size: 0.75rem;
-          color: #ef4444;
-        }
-
-        .password-input-wrapper {
-          position: relative;
-        }
-
-        .password-input-wrapper input {
-          width: 100%;
-          padding-right: 2.5rem;
-        }
-
-        .password-toggle {
-          position: absolute;
-          right: 0.75rem;
-          top: 50%;
-          transform: translateY(-50%);
-          color: var(--text-muted);
-        }
-
-        .form-options {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          font-size: 0.875rem;
-        }
-
-        .checkbox-label {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          cursor: pointer;
-        }
-
-        .forgot-password {
-          color: var(--primary);
-          font-weight: 500;
-        }
-
-        .login-btn {
-          margin-top: 0.5rem;
-          height: 42px;
-        }
-
-        .login-footer {
-          margin-top: 2rem;
-          padding-top: 1.5rem;
-          border-top: 1px solid var(--border);
-          text-align: center;
-          font-size: 0.8125rem;
-          color: var(--text-muted);
-        }
-
-        .animate-spin {
-          animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-      `}</style>
-    </div>
-  );
-};
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder={role === 'student' ? 'std_22cs216@nitk.edu.in' : 'bubu@nitk.edu.in'}
+              style={{
+                width: '100%',
+                backgroundColor: 'rgba(15, 23, 42, 0.6)',
+                border: '1px solid #1e293b',
+                borderRadius: '12px',
+                padding: '12px 16px',
+                fontSize: '14px',
+                color: '#f8fafc',
+                outline: 'none
