@@ -34,7 +34,7 @@ export default function LoginForm() {
       position: 'relative',
       overflow: 'hidden'
     }}>
-      {/* Premium Ambient Background Glows */}
+      {/* Background Glow Elements */}
       <div style={{
         position: 'absolute',
         top: '20%',
@@ -58,7 +58,7 @@ export default function LoginForm() {
         pointerEvents: 'none'
       }} />
 
-      {/* Main Glassmorphic Card Container */}
+      {/* Main Glassmorphic Panel */}
       <div style={{
         width: '100%',
         maxWidth: '420px',
@@ -71,7 +71,6 @@ export default function LoginForm() {
         boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
         position: 'relative'
       }}>
-        {/* Top Accent Line */}
         <div style={{
           position: 'absolute',
           top: 0,
@@ -81,11 +80,10 @@ export default function LoginForm() {
           background: 'linear-gradient(to right, transparent, #6366f1, #a855f7, transparent)'
         }} />
         
-        {/* Header Section */}
         <div style={{ textAlign: 'center', marginBottom: '32px' }}>
           <div style={{
-            inlineSize: '48px',
-            blockSize: '48px',
+            width: '48px',
+            height: '48px',
             borderRadius: '14px',
             background: 'linear-gradient(135deg, #6366f1, #4f46e5)',
             display: 'inline-flex',
@@ -108,9 +106,8 @@ export default function LoginForm() {
         </div>
 
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-          {/* Role Selection Toggle */}
           <div>
-            <label style={{ fontSize: '10px', fontFamily: 'monospace', tracking: '1px', color: '#64748b', textTransform: 'uppercase', display: 'block', marginBottom: '10px' }}>
+            <label style={{ fontSize: '10px', fontFamily: 'monospace', color: '#64748b', textTransform: 'uppercase', display: 'block', marginBottom: '10px' }}>
               Gate Authorization Target
             </label>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', backgroundColor: '#090d16', border: '1px solid #1e293b', padding: '6px', borderRadius: '14px' }}>
@@ -151,7 +148,6 @@ export default function LoginForm() {
             </div>
           </div>
 
-          {/* Email Input Node */}
           <div>
             <label style={{ fontSize: '10px', fontFamily: 'monospace', color: '#64748b', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>
               University Email Signature
@@ -170,11 +166,8 @@ export default function LoginForm() {
                 fontSize: '14px',
                 color: '#f8fafc',
                 outline: 'none',
-                boxSizing: 'border-box',
-                transition: 'border-color 0.2s'
+                boxSizing: 'border-box'
               }}
-              onFocus={(e) => e.target.style.borderColor = '#6366f1'}
-              onBlur={(e) => e.target.style.borderColor = '#1e293b'}
             />
           </div>
 
@@ -184,7 +177,6 @@ export default function LoginForm() {
             </p>
           )}
 
-          {/* Action Submission Button */}
           <button
             type="submit"
             disabled={isLoading}
