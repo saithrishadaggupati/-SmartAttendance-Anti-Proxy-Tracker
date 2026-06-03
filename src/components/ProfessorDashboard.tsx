@@ -4,21 +4,21 @@ import { useAuth } from '../contexts/AuthContext';
 export default function ProfessorDashboard() {
   const { user, logout } = useAuth();
   const [isSyncing, setIsSyncing] = useState(false);
-  const [syncLog, setSyncLog] = useState('All telemetry boundary lines fully operational.');
+  const [syncLog, setSyncLog] = useState('All faculty telemetry tracks fully synchronized.');
 
-  // Simulation metrics loaded with your specified department professors
-  const studentRoster = [
-    { id: "FAC//01", name: "Prof. BUBU HEAD", role: "Head of Department", status: "Active Node", signature: "CORE//MGMT_HEAD" },
-    { id: "FAC//02", name: "Director", role: "Campus Executive", status: "Active Node", signature: "CORE//MGMT_DIR" },
-    { id: "FAC//03", name: "Prof. BUDU", role: "Core Instructor", status: "Proxy Conflict", signature: "NODE//ERR_OUT_OF_BOUNDS" }
+  // System Roster configured precisely to your structural management layout
+  const facultyRoster = [
+    { id: "EXEC//01", name: "Director BUBU", department: "Computer Science Core", role: "Director & Head", status: "Secure Core" },
+    { id: "EXEC//02", name: "DUDU", department: "Computer Science Core", role: "PA of BUBU / Counselor", status: "Secure Core" },
+    { id: "EXEC//03", name: "BUDU", department: "Peripheral Allied Engineering", role: "Other Dept Head", status: "Active External" }
   ];
 
   const triggerTelemetrySync = () => {
     setIsSyncing(true);
-    setSyncLog('Querying hardware geolocation grids for faculty nodes...');
+    setSyncLog('Querying cluster logs for administrative node validation...');
     
     setTimeout(() => {
-      setSyncLog('Sync complete. Department clusters verified secure. 1 peripheral anomaly flagged.');
+      setSyncLog('Sync complete. Verified roles: Director BUBU, Counselor DUDU, and External Head BUDU are mapped.');
       setIsSyncing(false);
     }, 2000);
   };
@@ -45,7 +45,7 @@ export default function ProfessorDashboard() {
         pointerEvents: 'none'
       }} />
 
-      {/* Top Header Panel */}
+      {/* Top Header */}
       <div style={{
         maxWidth: '900px',
         margin: '0 auto 32px auto',
@@ -60,7 +60,7 @@ export default function ProfessorDashboard() {
             Smart Attendance
           </h1>
           <p style={{ fontSize: '12px', color: '#a855f7', margin: '4px 0 0 0', fontFamily: 'monospace', fontWeight: 'bold' }}>
-            CORE // FACULTY MANAGEMENT TERMINAL
+            CORE // FACULTY ARBITRATION VIEW
           </p>
         </div>
         <button
@@ -82,7 +82,7 @@ export default function ProfessorDashboard() {
 
       <main style={{ maxWidth: '900px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '24px' }}>
         
-        {/* Statistics & Sync Card */}
+        {/* Core Synchronization Analytics */}
         <div style={{
           backgroundColor: 'rgba(15, 23, 42, 0.6)',
           backdropFilter: 'blur(20px)',
@@ -94,13 +94,13 @@ export default function ProfessorDashboard() {
           gap: '20px'
         }}>
           <div>
-            <span style={{ fontSize: '10px', fontFamily: 'monospace', color: '#64748b', textTransform: 'uppercase', display: 'block' }}>Faculty Session</span>
-            <div style={{ fontSize: '15px', fontWeight: 'bold', color: '#f8fafc', marginTop: '4px' }}>{user?.email || 'professor@nitk.edu.in'}</div>
+            <span style={{ fontSize: '10px', fontFamily: 'monospace', color: '#64748b', textTransform: 'uppercase', display: 'block' }}>Active Administration Terminal</span>
+            <div style={{ fontSize: '15px', fontWeight: 'bold', color: '#f8fafc', marginTop: '4px' }}>{user?.email || 'bubu@nitk.edu.in'}</div>
           </div>
           <div>
-            <span style={{ fontSize: '10px', fontFamily: 'monospace', color: '#64748b', textTransform: 'uppercase', display: 'block' }}>Active Department Tracks</span>
+            <span style={{ fontSize: '10px', fontFamily: 'monospace', color: '#64748b', textTransform: 'uppercase', display: 'block' }}>Directory State Summary</span>
             <div style={{ fontSize: '14px', color: '#e2e8f0', marginTop: '4px' }}>
-              Monitored Nodes: <strong style={{ color: '#ffffff' }}>3 Faculty Signatures</strong>
+              Monitored Nodes: <strong style={{ color: '#ffffff' }}>3 Core Staff Mapped</strong>
             </div>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
@@ -119,16 +119,16 @@ export default function ProfessorDashboard() {
                 boxShadow: '0 4px 12px rgba(99, 102, 241, 0.2)'
               }}
             >
-              {isSyncing ? 'Syncing Grids...' : '🔄 Sync Hardware Feed'}
+              {isSyncing ? 'Syncing Map...' : '🔄 Sync Hardware Feed'}
             </button>
           </div>
 
           <div style={{ gridColumn: 'span 3', backgroundColor: '#090d16', border: '1px solid #1e293b', padding: '12px 16px', borderRadius: '10px', fontFamily: 'monospace', fontSize: '12px', color: '#a855f7' }}>
-            <span style={{ color: '#64748b' }}>System Feed:</span> {syncLog}
+            <span style={{ color: '#64748b' }}>System Registry Trace:</span> {syncLog}
           </div>
         </div>
 
-        {/* Real-time Faculty Grid Log */}
+        {/* Structural Matrix Logs */}
         <div style={{
           backgroundColor: 'rgba(2, 6, 23, 0.7)',
           border: '1px solid #334155',
@@ -136,25 +136,25 @@ export default function ProfessorDashboard() {
           padding: '28px',
           overflowX: 'auto'
         }}>
-          <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 20px 0' }}>Department Verification Matrix</h3>
+          <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 20px 0' }}>Department Structural Authority Map</h3>
           
           <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '14px' }}>
             <thead>
               <tr style={{ borderBottom: '1px solid #1e293b', color: '#64748b', fontFamily: 'monospace', fontSize: '11px', textTransform: 'uppercase' }}>
-                <th style={{ padding: '12px 8px' }}>Staff Reference ID</th>
-                <th style={{ padding: '12px 8px' }}>Faculty Designation Name</th>
-                <th style={{ padding: '12px 8px' }}>Assigned Department Role</th>
-                <th style={{ padding: '12px 8px' }}>Network Token Signature</th>
-                <th style={{ padding: '12px 8px', textAlign: 'right' }}>Security Status</th>
+                <th style={{ padding: '12px 8px' }}>Staff ID Token</th>
+                <th style={{ padding: '12px 8px' }}>Faculty Authority Name</th>
+                <th style={{ padding: '12px 8px' }}>Assigned Department Branch</th>
+                <th style={{ padding: '12px 8px' }}>Verified Institutional Role</th>
+                <th style={{ padding: '12px 8px', textAlign: 'right' }}>Grid Security Status</th>
               </tr>
             </thead>
             <tbody>
-              {studentRoster.map((staff, idx) => (
+              {facultyRoster.map((staff, idx) => (
                 <tr key={idx} style={{ borderBottom: '1px solid #0f172a', backgroundColor: idx % 2 === 0 ? 'rgba(15, 23, 42, 0.2)' : 'transparent' }}>
                   <td style={{ padding: '14px 8px', fontFamily: 'monospace', color: '#94a3b8' }}>{staff.id}</td>
                   <td style={{ padding: '14px 8px', fontWeight: 600, color: '#f1f5f9' }}>{staff.name}</td>
-                  <td style={{ padding: '14px 8px', color: '#94a3b8' }}>{staff.role}</td>
-                  <td style={{ padding: '14px 8px', fontFamily: 'monospace', fontSize: '12px', color: '#64748b' }}>{staff.signature}</td>
+                  <td style={{ padding: '14px 8px', color: '#e2e8f0' }}>{staff.department}</td>
+                  <td style={{ padding: '14px 8px', fontFamily: 'monospace', fontSize: '12px', color: '#cbd5e1' }}>{staff.role}</td>
                   <td style={{ padding: '14px 8px', textAlign: 'right' }}>
                     <span style={{
                       display: 'inline-block',
@@ -162,14 +162,11 @@ export default function ProfessorDashboard() {
                       fontWeight: 'bold',
                       padding: '4px 10px',
                       borderRadius: '8px',
-                      backgroundColor: 
-                        staff.status === 'Active Node' ? 'rgba(52, 211, 153, 0.1)' : 'rgba(239, 68, 68, 0.1)',
-                      color: 
-                        staff.status === 'Active Node' ? '#34d399' : '#f87171',
-                      border: 
-                        staff.status === 'Active Node' ? '1px solid rgba(52, 211, 153, 0.2)' : '1px solid rgba(239, 68, 68, 0.2)'
+                      backgroundColor: staff.status === 'Secure Core' ? 'rgba(52, 211, 153, 0.1)' : 'rgba(129, 140, 248, 0.1)',
+                      color: staff.status === 'Secure Core' ? '#34d399' : '#818cf8',
+                      border: staff.status === 'Secure Core' ? '1px solid rgba(52, 211, 153, 0.2)' : '1px solid rgba(129, 140, 248, 0.2)'
                     }}>
-                      {staff.status === 'Proxy Conflict' ? '⚠️ BOUNDARY BREACH' : staff.status.toUpperCase()}
+                      {staff.status.toUpperCase()}
                     </span>
                   </td>
                 </tr>

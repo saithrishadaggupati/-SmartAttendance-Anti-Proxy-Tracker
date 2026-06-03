@@ -6,10 +6,11 @@ export default function StudentDashboard() {
   const [status, setStatus] = useState<'idle' | 'scanning' | 'verified' | 'failed'>('idle');
   const [log, setLog] = useState<string>('Handshake array standing by. Broadcast signature required.');
   
-  // Custom Academic State Metrics with your official Director assignment
+  // Custom Academic State Metrics aligned with your updated department roles
   const academicData = {
     course: "Computer Science Engineering Core (CSE-401)",
-    professor: "Director (Head of CSE Dept)",
+    instructor: "Director BUBU (Head of Department)",
+    counselor: "DUDU (PA of BUBU / Dept Counselor)",
     daysAttended: 38,
     totalWorkingDays: 50,
     daysRemaining: 12,
@@ -43,6 +44,7 @@ export default function StudentDashboard() {
       position: 'relative',
       overflow: 'hidden'
     }}>
+      {/* Background Glow */}
       <div style={{
         position: 'absolute',
         top: '-10%',
@@ -55,7 +57,7 @@ export default function StudentDashboard() {
         pointerEvents: 'none'
       }} />
 
-      {/* Top Navigation Header */}
+      {/* Navigation Header */}
       <div style={{
         maxWidth: '800px',
         margin: '0 auto 32px auto',
@@ -92,7 +94,7 @@ export default function StudentDashboard() {
 
       <main style={{ maxWidth: '800px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '24px' }}>
         
-        {/* User Profile Card */}
+        {/* Account Identification Banner */}
         <div style={{
           backgroundColor: 'rgba(15, 23, 42, 0.6)',
           border: '1px solid #1e293b',
@@ -119,12 +121,12 @@ export default function StudentDashboard() {
               Authorized Account Signature
             </p>
             <p style={{ fontSize: '15px', fontWeight: 600, color: '#f1f5f9', margin: '2px 0 0 0' }}>
-              {user?.email || 'student@nitk.edu.in'}
+              {user?.email || 'aarav@nitk.edu.in'}
             </p>
           </div>
         </div>
 
-        {/* Academic Profile Modules */}
+        {/* Academic Roster Layout */}
         <div style={{
           backgroundColor: 'rgba(15, 23, 42, 0.4)',
           border: '1px solid #1e293b',
@@ -137,7 +139,12 @@ export default function StudentDashboard() {
           <div style={{ gridColumn: 'span 2' }}>
             <span style={{ fontSize: '10px', fontFamily: 'monospace', color: '#64748b', textTransform: 'uppercase', display: 'block', marginBottom: '4px' }}>Active Enrolled Course</span>
             <div style={{ fontSize: '15px', fontWeight: 'bold', color: '#f8fafc' }}>{academicData.course}</div>
-            <div style={{ fontSize: '13px', color: '#94a3b8', marginTop: '4px' }}>Instructor: <span style={{ color: '#818cf8', fontWeight: 500 }}>{academicData.professor}</span></div>
+            <div style={{ fontSize: '13px', color: '#94a3b8', marginTop: '6px' }}>
+              Instructor: <span style={{ color: '#6366f1', fontWeight: 600 }}>{academicData.instructor}</span>
+            </div>
+            <div style={{ fontSize: '12px', color: '#94a3b8', marginTop: '4px' }}>
+              Counseling Contact: <span style={{ color: '#a855f7', fontWeight: 500 }}>{academicData.counselor}</span>
+            </div>
           </div>
 
           <div style={{ borderTop: '1px solid #1e293b', paddingTop: '16px' }}>
@@ -173,7 +180,7 @@ export default function StudentDashboard() {
           </div>
         </div>
 
-        {/* Core Verification Terminal */}
+        {/* Verification Engine */}
         <div style={{
           backgroundColor: 'rgba(2, 6, 23, 0.7)',
           backdropFilter: 'blur(20px)',
