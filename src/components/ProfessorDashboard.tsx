@@ -6,11 +6,14 @@ export default function ProfessorDashboard() {
   const [isSyncing, setIsSyncing] = useState(false);
   const [syncLog, setSyncLog] = useState('All faculty telemetry tracks fully synchronized.');
 
-  // System Roster configured precisely to your structural management layout
+  // System Roster updated precisely: BUBU (3 courses), DUDU (2 courses), BUDU (1 course)
   const facultyRoster = [
-    { id: "EXEC//01", name: "Director BUBU", department: "Computer Science Core", role: "Director & Head", status: "Secure Core" },
-    { id: "EXEC//02", name: "DUDU", department: "Computer Science Core", role: "PA of BUBU / Counselor", status: "Secure Core" },
-    { id: "EXEC//03", name: "BUDU", department: "Peripheral Allied Engineering", role: "Other Dept Head", status: "Active External" }
+    { id: "EXEC//01", name: "Director BUBU", department: "Computer Science Core", role: "Director & Head (Advanced Core 1)", status: "Secure Core" },
+    { id: "EXEC//02", name: "Director BUBU", department: "Computer Science Core", role: "Director & Head (Advanced Core 2)", status: "Secure Core" },
+    { id: "EXEC//03", name: "Director BUBU", department: "Computer Science Core", role: "Director & Head (Advanced Core 3)", status: "Secure Core" },
+    { id: "EXEC//04", name: "DUDU", department: "Computer Science Core", role: "PA of BUBU / Counselor (Course 1)", status: "Secure Core" },
+    { id: "EXEC//05", name: "DUDU", department: "Computer Science Core", role: "PA of BUBU / Counselor (Course 2)", status: "Secure Core" },
+    { id: "EXEC//06", name: "BUDU", department: "Peripheral Allied Engineering", role: "Other Dept Head (Core Course)", status: "Active External" }
   ];
 
   const triggerTelemetrySync = () => {
@@ -18,7 +21,7 @@ export default function ProfessorDashboard() {
     setSyncLog('Querying cluster logs for administrative node validation...');
     
     setTimeout(() => {
-      setSyncLog('Sync complete. Verified roles: Director BUBU, Counselor DUDU, and External Head BUDU are mapped.');
+      setSyncLog('Sync complete. Mapped 3 high-level courses for BUBU, 2 for DUDU, and 1 for BUDU.');
       setIsSyncing(false);
     }, 2000);
   };
@@ -100,7 +103,7 @@ export default function ProfessorDashboard() {
           <div>
             <span style={{ fontSize: '10px', fontFamily: 'monospace', color: '#64748b', textTransform: 'uppercase', display: 'block' }}>Directory State Summary</span>
             <div style={{ fontSize: '14px', color: '#e2e8f0', marginTop: '4px' }}>
-              Monitored Nodes: <strong style={{ color: '#ffffff' }}>3 Core Staff Mapped</strong>
+              Monitored Nodes: <strong style={{ color: '#ffffff' }}>6 Mapped Assignments</strong>
             </div>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
