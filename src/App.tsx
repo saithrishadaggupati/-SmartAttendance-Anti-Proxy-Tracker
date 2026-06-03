@@ -14,28 +14,79 @@ function NavigationWrapper() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-100 antialiased selection:bg-indigo-500/30 flex flex-col">
-      {/* Premium Global Top Navigation Strip */}
-      <nav className="border-b border-slate-800/60 bg-slate-950/40 backdrop-blur-md sticky top-0 z-50 px-6 py-4">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <div className="h-8 w-8 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-500/20 text-sm">
+    <div style={{
+      minHeight: '100vh',
+      backgroundColor: '#0f172a',
+      color: '#ffffff',
+      fontFamily: 'system-ui, -apple-system, sans-serif',
+      display: 'flex',
+      flexDirection: 'column'
+    }}>
+      {/* Fixed Uniform Premium Top Navigation Strip */}
+      <nav style={{
+        borderBottom: '1px solid rgba(30, 41, 59, 0.6)',
+        backgroundColor: 'rgba(2, 6, 23, 0.8)',
+        backdropFilter: 'blur(12px)',
+        position: 'sticky',
+        top: 0,
+        zIndex: 50,
+        padding: '16px 24px'
+      }}>
+        <div style={{
+          maxWidth: '1280px',
+          margin: '0 auto',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div style={{
+              height: '32px',
+              width: '32px',
+              borderRadius: '12px',
+              background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontWeight: 'bold',
+              color: '#ffffff',
+              fontSize: '14px',
+              boxShadow: '0 4px 12px rgba(99, 102, 241, 0.2)'
+            }}>
               SA
             </div>
             <div>
-              <h1 className="text-sm font-black tracking-wider text-white uppercase">Smart Attendance</h1>
-              <p className="text-[10px] font-mono text-slate-500 uppercase tracking-tight">Active Identity Authentication Node</p>
+              <h1 style={{ fontSize: '14px', fontWeight: 900, margin: 0, letterSpacing: '0.05em', textTransform: 'uppercase', color: '#ffffff' }}>
+                Smart Attendance
+              </h1>
+              <p style={{ fontSize: '10px', fontFamily: 'monospace', color: '#64748b', margin: 0, textTransform: 'uppercase' }}>
+                Active Identity Authentication Node
+              </p>
             </div>
           </div>
           
-          <div className="flex items-center gap-4">
-            <div className="text-right hidden sm:block">
-              <p className="text-xs font-bold text-slate-200">{user.name}</p>
-              <p className="text-[10px] font-mono text-indigo-400 capitalize">{user.role} Authorization</p>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+            <div style={{ textAlign: 'right', display: 'block' }}>
+              <p style={{ fontSize: '12px', fontWeight: 'bold', color: '#e2e8f0', margin: 0 }}>{user.name}</p>
+              <p style={{ fontSize: '10px', fontFamily: 'monospace', color: '#818cf8', margin: 0, textTransform: 'capitalize' }}>
+                {user.role} Authorization
+              </p>
             </div>
             <button
               onClick={logout}
-              className="px-3.5 py-1.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-400 hover:text-slate-200 text-xs font-bold font-mono uppercase tracking-wide transition-all duration-150 active:scale-95 shadow-inner"
+              style={{
+                padding: '6px 14px',
+                borderRadius: '12px',
+                backgroundColor: '#0f172a',
+                border: '1px solid #1e293b',
+                color: '#94a3b8',
+                fontSize: '12px',
+                fontWeight: 'bold',
+                fontFamily: 'monospace',
+                textTransform: 'uppercase',
+                cursor: 'pointer',
+                transition: 'all 0.15s'
+              }}
             >
               Disconnect Node
             </button>
@@ -44,8 +95,7 @@ function NavigationWrapper() {
       </nav>
 
       {/* Main Core Viewport Container */}
-      <main className="flex-1 max-w-7xl w-full mx-auto p-4 md:p-8">
-        {/* Switched from old StudentCheckIn to our new premium StudentDashboard */}
+      <main style={{ flex: 1, maxWidth: '1280px', width: '100%', margin: '0 auto', padding: '32px 16px' }}>
         {user.role === 'student' ? <StudentDashboard /> : <ProfessorDashboard />}
       </main>
     </div>
