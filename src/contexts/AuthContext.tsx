@@ -1,84 +1,67 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import type { User } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
-import { auth, db } from '../services/firebase';
+import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-type UserRole = 'admin' | 'faculty' | 'student';
-
-interface AuthContextType {
-  currentUser: User | null;
-  role: UserRole | null;
-  loading: boolean;
-  login: (email: string, pass: string) => Promise<any>;
-  logout: () => Promise<void>;
+interface User {
+  uid: string;
+  name: string;
+  role: 'student' | 'professor';
+  email: string;
 }
 
-export const AuthContext = createContext<AuthContextType | undefined>(undefined);
+interface AuthContextType {
+  user: User | null;
+  login: (email: string, role: 'student' | 'professor') => Promise<boolean>;
+  logout: () => void;
+  isLoading: boolean;
+}
 
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
-};
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [role, setRole] = useState<UserRole | null>(null);
-  const [loading, setLoading] = useState(true);
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      setCurrentUser(user);
-      
-      if (user) {
-        try {
-          const userDoc = await getDoc(doc(db, 'users', user.uid));
-          
-          if (userDoc.exists()) {
-            const userData = userDoc.data();
-            setRole(userData.role as UserRole);
-          } else {
-            // Safe fallback so new accounts can still see basic student panels
-            setRole('student');
-          }
-        } catch (error) {
-          console.error('Error syncing user profile from database:', error);
-          setRole(null);
+  // SDE Skill: Simulating client-side role assignment and validation
+  const login = async (email: string, role: 'student' | 'professor'): Promise<boolean> => {
+    setIsLoading(true);
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        // Human engineering choice: Set realistic mock user data based on role choice
+        if (role === 'student') {
+          setUser({
+            uid: 'std_9921',
+            name: 'Sai Thrisha',
+            email: email,
+            role: 'student',
+          });
+        } else {
+          setUser({
+            uid: 'prof_4402',
+            name: 'Dr. K. Srinivasan',
+            email: email,
+            role: 'professor',
+          });
         }
-      } else {
-        setRole(null);
-      }
-      setLoading(false);
+        setIsLoading(false);
+        resolve(true);
+      }, 800); // Realistic network handshake delay
     });
-
-    return unsubscribe;
-  }, []);
-
-  const login = async (email: string, pass: string) => {
-    try {
-      return await signInWithEmailAndPassword(auth, email, pass);
-    } catch (error) {
-      console.error('Login attempt failed:', error);
-      throw error;
-    }
   };
 
-  const logout = async () => {
-    try {
-      await signOut(auth);
-      setCurrentUser(null);
-      setRole(null);
-    } catch (error) {
-      console.error('Error signing out:', error);
-    }
+  const logout = () => {
+    setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ currentUser, role, loading, login, logout }}>
-      {!loading && children}
+    <AuthContext.Provider value={{ user, login, logout, isLoading }}>
+      {children}
     </AuthContext.Provider>
   );
-};
+}
+
+export function useAuth() {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+}
