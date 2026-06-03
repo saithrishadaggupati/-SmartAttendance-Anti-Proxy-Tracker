@@ -5,13 +5,23 @@ import ProfessorDashboard from './components/ProfessorDashboard';
 import StudentDashboard from './components/StudentDashboard';
 
 function MainAppLayout() {
+  const { user } = useAuth();
   const [activeTab, setActiveTab] = useState<'login' | 'student' | 'professor'>('login');
   const [isMounted, setIsMounted] = useState(false);
 
-  // Absolute barrier against Hydration Mismatch crashes
+  // Sync tab navigation state with authentication logging signatures
   useEffect(() => {
     setIsMounted(true);
-  }, []);
+    if (user) {
+      if (user.role === 'professor') {
+        setActiveTab('professor');
+      } else if (user.role === 'student') {
+        setActiveTab('student');
+      }
+    } else {
+      setActiveTab('login');
+    }
+  }, [user]);
 
   if (!isMounted) {
     return (
@@ -24,7 +34,7 @@ function MainAppLayout() {
   return (
     <div style={{ backgroundColor: '#020617', minHeight: '100vh', position: 'relative' }}>
       
-      {/* Universal Institutional Header Switcher */}
+      {/* Universal Institutional Header (Tabs are locked based on Login Status) */}
       <div style={{
         position: 'fixed',
         top: 0,
@@ -46,37 +56,46 @@ function MainAppLayout() {
         <div style={{ display: 'flex', gap: '8px' }}>
           <button 
             onClick={() => setActiveTab('login')} 
-            style={{ padding: '6px 14px', backgroundColor: activeTab === 'login' ? '#3b82f6' : '#1e293b', color: '#fff', border: 'none', borderRadius: '8px', fontSize: '12px', fontWeight: 'bold', cursor: 'pointer', transition: 'all 0.2s' }}
+            style={{ padding: '6px 14px', backgroundColor: activeTab === 'login' ? '#1e293b' : 'transparent', border: activeTab === 'login' ? '1px solid #3b82f6' : 'none', color: activeTab === 'login' ? '#3b82f6' : '#94a3b8', fontSize: '12px', fontWeight: 'bold', cursor: 'pointer', borderRadius: '8px' }}
           >
-            🔒 1. Login Gateway
+            {user ? 'ℹ️ Identity Active' : '🔒 1. Login Gateway'}
           </button>
+          
           <button 
-            onClick={() => setActiveTab('student')} 
-            style={{ padding: '6px 14px', backgroundColor: activeTab === 'student' ? '#3b82f6' : '#1e293b', color: '#fff', border: 'none', borderRadius: '8px', fontSize: '12px', fontWeight: 'bold', cursor: 'pointer', transition: 'all 0.2s' }}
+            onClick={() => user?.role === 'student' && setActiveTab('student')} 
+            disabled={user?.role !== 'student'}
+            style={{ padding: '6px 14px', backgroundColor: activeTab === 'student' ? '#1e293b' : 'transparent', border: activeTab === 'student' ? '1px solid #3b82f6' : 'none', color: activeTab === 'student' ? '#3b82f6' : '#475569', fontSize: '12px', fontWeight: 'bold', cursor: user?.role === 'student' ? 'pointer' : 'not-allowed', borderRadius: '8px', opacity: user?.role === 'student' ? 1 : 0.4 }}
           >
             🔑 2. Student Terminal
           </button>
+          
           <button 
-            onClick={() => setActiveTab('professor')} 
-            style={{ padding: '6px 14px', backgroundColor: activeTab === 'professor' ? '#a855f7' : '#1e293b', color: '#fff', border: 'none', borderRadius: '8px', fontSize: '12px', fontWeight: 'bold', cursor: 'pointer', transition: 'all 0.2s' }}
+            onClick={() => user?.role === 'professor' && setActiveTab('professor')} 
+            disabled={user?.role !== 'professor'}
+            style={{ padding: '6px 14px', backgroundColor: activeTab === 'professor' ? '#1e293b' : 'transparent', border: activeTab === 'professor' ? '1px solid #a855f7' : 'none', color: activeTab === 'professor' ? '#a855f7' : '#475569', fontSize: '12px', fontWeight: 'bold', cursor: user?.role === 'professor' ? 'pointer' : 'not-allowed', borderRadius: '8px', opacity: user?.role === 'professor' ? 1 : 0.4 }}
           >
             📊 3. Faculty Core
           </button>
         </div>
       </div>
 
-      {/* Screen Portal Viewports */}
+      {/* Screen Portal Viewports with Backend Security Guard Checks */}
       <div style={{ paddingTop: '80px', paddingBottom: '40px' }}>
         {activeTab === 'login' && <LoginForm />}
-        {activeTab === 'student' && <StudentDashboard />}
-        {activeTab === 'professor' && <ProfessorDashboard />}
+        
+        {activeTab === 'student' && (
+          user?.role === 'student' ? <StudentDashboard /> : <div style={{ color: '#f87171', textAlign: 'center', marginTop: '40px', fontFamily: 'monospace' }}>⚠️ ACCESS DENIED: Student Clearance Token Missing.</div>
+        )}
+        
+        {activeTab === 'professor' && (
+          user?.role === 'professor' ? <ProfessorDashboard /> : <div style={{ color: '#f87171', textAlign: 'center', marginTop: '40px', fontFamily: 'monospace' }}>⚠️ ACCESS DENIED: Faculty Core Authorization Missing.</div>
+        )}
       </div>
 
     </div>
   );
 }
 
-// Master Root Wrapper supplying the required Authentication state to all children nodes
 export default function App() {
   return (
     <AuthProvider>
