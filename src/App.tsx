@@ -1,3 +1,8 @@
+import './index.css';
+import React from 'react';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
+// ... leave the rest of the file exactly as it is ...
+
 import React from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import LoginForm from './components/LoginForm';
