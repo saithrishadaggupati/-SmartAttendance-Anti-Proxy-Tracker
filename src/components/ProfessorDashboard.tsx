@@ -6,14 +6,14 @@ export default function ProfessorDashboard() {
   const [isSyncing, setIsSyncing] = useState(false);
   const [syncLog, setSyncLog] = useState('All faculty telemetry tracks fully synchronized.');
 
-  // System Roster updated precisely: BUBU (3 courses), DUDU (2 courses), BUDU (1 course)
+  // Fixed Roster: Removed the 5x repeating department names and replaced with distinct Course Codes
   const facultyRoster = [
-    { id: "EXEC//01", name: "Director BUBU", department: "Computer Science Core", role: "Director & Head (Advanced Core 1)", status: "Secure Core" },
-    { id: "EXEC//02", name: "Director BUBU", department: "Computer Science Core", role: "Director & Head (Advanced Core 2)", status: "Secure Core" },
-    { id: "EXEC//03", name: "Director BUBU", department: "Computer Science Core", role: "Director & Head (Advanced Core 3)", status: "Secure Core" },
-    { id: "EXEC//04", name: "DUDU", department: "Computer Science Core", role: "PA of BUBU / Counselor (Course 1)", status: "Secure Core" },
-    { id: "EXEC//05", name: "DUDU", department: "Computer Science Core", role: "PA of BUBU / Counselor (Course 2)", status: "Secure Core" },
-    { id: "EXEC//06", name: "BUDU", department: "Peripheral Allied Engineering", role: "Other Dept Head (Core Course)", status: "Active External" }
+    { id: "EXEC//01", name: "Director BUBU", code: "CSE-401 (Core)", role: "Advanced Operating Systems", status: "Secure Core" },
+    { id: "EXEC//02", name: "Director BUBU", code: "CSE-403 (Core)", role: "Distributed Cloud Architecture", status: "Secure Core" },
+    { id: "EXEC//03", name: "Director BUBU", code: "CSE-407 (Core)", role: "Neural Network Telemetry", status: "Secure Core" },
+    { id: "EXEC//04", name: "DUDU", code: "CSE-202 (Found)", role: "PA of BUBU & Counselor // Data Structures", status: "Secure Core" },
+    { id: "EXEC//05", name: "DUDU", code: "CSE-304 (Found)", role: "PA of BUBU & Counselor // Database Systems", status: "Secure Core" },
+    { id: "EXEC//06", name: "BUDU", code: "ECE-301 (Elect)", role: "Other Dept Head // Digital Electronics", status: "Active External" }
   ];
 
   const triggerTelemetrySync = () => {
@@ -21,7 +21,7 @@ export default function ProfessorDashboard() {
     setSyncLog('Querying cluster logs for administrative node validation...');
     
     setTimeout(() => {
-      setSyncLog('Sync complete. Mapped 3 high-level courses for BUBU, 2 for DUDU, and 1 for BUDU.');
+      setSyncLog('Sync complete. Mapped 3 distinct tracks for BUBU, 2 for DUDU, and 1 for BUDU without text repetition.');
       setIsSyncing(false);
     }, 2000);
   };
@@ -50,7 +50,7 @@ export default function ProfessorDashboard() {
 
       {/* Top Header */}
       <div style={{
-        maxWidth: '900px',
+        maxWidth: '950px',
         margin: '0 auto 32px auto',
         display: 'flex',
         justifyContent: 'space-between',
@@ -83,7 +83,7 @@ export default function ProfessorDashboard() {
         </button>
       </div>
 
-      <main style={{ maxWidth: '900px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+      <main style={{ maxWidth: '950px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '24px' }}>
         
         {/* Core Synchronization Analytics */}
         <div style={{
@@ -146,8 +146,8 @@ export default function ProfessorDashboard() {
               <tr style={{ borderBottom: '1px solid #1e293b', color: '#64748b', fontFamily: 'monospace', fontSize: '11px', textTransform: 'uppercase' }}>
                 <th style={{ padding: '12px 8px' }}>Staff ID Token</th>
                 <th style={{ padding: '12px 8px' }}>Faculty Authority Name</th>
-                <th style={{ padding: '12px 8px' }}>Assigned Department Branch</th>
-                <th style={{ padding: '12px 8px' }}>Verified Institutional Role</th>
+                <th style={{ padding: '12px 8px' }}>Course Code Mapped</th>
+                <th style={{ padding: '12px 8px' }}>Verified Institutional Target Track</th>
                 <th style={{ padding: '12px 8px', textAlign: 'right' }}>Grid Security Status</th>
               </tr>
             </thead>
@@ -156,8 +156,8 @@ export default function ProfessorDashboard() {
                 <tr key={idx} style={{ borderBottom: '1px solid #0f172a', backgroundColor: idx % 2 === 0 ? 'rgba(15, 23, 42, 0.2)' : 'transparent' }}>
                   <td style={{ padding: '14px 8px', fontFamily: 'monospace', color: '#94a3b8' }}>{staff.id}</td>
                   <td style={{ padding: '14px 8px', fontWeight: 600, color: '#f1f5f9' }}>{staff.name}</td>
-                  <td style={{ padding: '14px 8px', color: '#e2e8f0' }}>{staff.department}</td>
-                  <td style={{ padding: '14px 8px', fontFamily: 'monospace', fontSize: '12px', color: '#cbd5e1' }}>{staff.role}</td>
+                  <td style={{ padding: '14px 8px', fontFamily: 'monospace', fontSize: '13px', color: '#6366f1', fontWeight: 'bold' }}>{staff.code}</td>
+                  <td style={{ padding: '14px 8px', color: '#e2e8f0' }}>{staff.role}</td>
                   <td style={{ padding: '14px 8px', textAlign: 'right' }}>
                     <span style={{
                       display: 'inline-block',
