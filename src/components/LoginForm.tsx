@@ -9,7 +9,6 @@ export default function LoginForm() {
   const [isConnecting, setIsConnecting] = useState(false);
   const [mounted, setMounted] = useState(false);
 
-  // Fixes Hydration Error #418 by ensuring layout rendering matches the server state
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -21,11 +20,11 @@ export default function LoginForm() {
     setIsConnecting(true);
 
     setTimeout(() => {
-      login({
-        email: email || (role === 'student' ? 'harish.v@bubu.edu.in' : 'director.bubu@bubu.edu.in'),
-        name: role === 'student' ? 'Harish Venkat' : 'Director BUBU Cluster',
-        role: role
-      });
+      // Fixed: Passed arguments matching your AuthContext expectation
+      login(
+        email || (role === 'student' ? 'harish.v@bubu.edu.in' : 'director.bubu@bubu.edu.in'),
+        role
+      );
       setIsConnecting(false);
     }, 500);
   };
