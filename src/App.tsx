@@ -26,7 +26,7 @@ function AppContent() {
     return <LoginForm />;
   }
 
-  // If authorized as faculty core, drop instantly into the 3-2-1 admin track view
+  // If authorized as faculty core, drop instantly into the admin track view
   if (user.role === 'professor') {
     return <ProfessorDashboard />;
   }
@@ -35,10 +35,14 @@ function AppContent() {
   return <StudentDashboard />;
 }
 
-export default function App() {
+// Fixed: Unified component rendering architecture
+function App() {
   return (
     <AuthProvider>
       <AppContent />
     </AuthProvider>
   );
 }
+
+// Fixed: Explicit default export for src/main.tsx to find!
+export default App;
