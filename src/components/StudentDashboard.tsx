@@ -6,17 +6,16 @@ export default function StudentDashboard() {
   const [status, setStatus] = useState<'idle' | 'scanning' | 'verified' | 'failed'>('idle');
   const [log, setLog] = useState<string>('Handshake array standing by. Broadcast signature required.');
   
-  // Custom Academic State Metrics
+  // Custom Academic State Metrics with your official Director assignment
   const academicData = {
     course: "Computer Science Engineering Core (CSE-401)",
-    professor: "Prof. Daggupati (Director, NITK Core Systems)",
+    professor: "Director (Head of CSE Dept)",
     daysAttended: 38,
     totalWorkingDays: 50,
     daysRemaining: 12,
     requiredPercentage: 75
   };
 
-  // Calculate current percentage metrics
   const standardPercentage = Math.round((academicData.daysAttended / academicData.totalWorkingDays) * 100);
   const isShortage = standardPercentage < academicData.requiredPercentage;
 
@@ -44,7 +43,6 @@ export default function StudentDashboard() {
       position: 'relative',
       overflow: 'hidden'
     }}>
-      {/* Background Ambient Glows */}
       <div style={{
         position: 'absolute',
         top: '-10%',
@@ -85,15 +83,13 @@ export default function StudentDashboard() {
             borderRadius: '10px',
             fontSize: '12px',
             fontWeight: '600',
-            cursor: 'pointer',
-            transition: 'all 0.2s'
+            cursor: 'pointer'
           }}
         >
           Disconnect Node
         </button>
       </div>
 
-      {/* Main Content Dashboard */}
       <main style={{ maxWidth: '800px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '24px' }}>
         
         {/* User Profile Card */}
@@ -128,7 +124,7 @@ export default function StudentDashboard() {
           </div>
         </div>
 
-        {/* Academic Profile Roster Module */}
+        {/* Academic Profile Modules */}
         <div style={{
           backgroundColor: 'rgba(15, 23, 42, 0.4)',
           border: '1px solid #1e293b',
@@ -165,7 +161,6 @@ export default function StudentDashboard() {
               </div>
             </div>
             
-            {/* Shortage Warning Badge */}
             {isShortage ? (
               <div style={{ fontSize: '11px', color: '#f87171', backgroundColor: 'rgba(239, 68, 68, 0.08)', border: '1px solid rgba(239, 68, 68, 0.15)', padding: '4px 8px', borderRadius: '6px', width: 'fit-content', marginTop: '6px' }}>
                 ⚠️ CRITICAL SHORTAGE ALERT
@@ -205,7 +200,6 @@ export default function StudentDashboard() {
             </span>
           </div>
 
-          {/* Telemetry Console Feed */}
           <div style={{
             backgroundColor: '#090d16',
             border: '1px solid #1e293b',
@@ -220,7 +214,6 @@ export default function StudentDashboard() {
             <span style={{ color: '#6366f1', marginRight: '8px' }}>&gt;</span> {log}
           </div>
 
-          {/* Verification Action Button */}
           <button
             onClick={handleVerify}
             disabled={status === 'scanning' || status === 'verified'}
@@ -245,7 +238,6 @@ export default function StudentDashboard() {
             {status === 'verified' && '✓ Verification Signature Secured'}
           </button>
         </div>
-
       </main>
     </div>
   );
