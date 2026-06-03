@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 
 export default function LoginForm() {
@@ -7,12 +7,19 @@ export default function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isConnecting, setIsConnecting] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  // Fixes Hydration Error #418 by ensuring layout rendering matches the server state
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsConnecting(true);
 
-    // Bypassed Validation: Generates dummy fallback handles if inputs are left blank
     setTimeout(() => {
       login({
         email: email || (role === 'student' ? 'harish.v@bubu.edu.in' : 'director.bubu@bubu.edu.in'),
@@ -20,7 +27,7 @@ export default function LoginForm() {
         role: role
       });
       setIsConnecting(false);
-    }, 800);
+    }, 500);
   };
 
   return (
