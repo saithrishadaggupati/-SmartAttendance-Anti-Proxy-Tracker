@@ -362,7 +362,7 @@ export const EnrollmentManagement: React.FC = () => {
         .text-xs { font-size: 0.75rem; }
         .table-loader {
           padding: 4rem;
-          display: flex;
+          display: flex;       
           flex-direction: column;
           align-items: center;
           gap: 1rem;

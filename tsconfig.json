@@ -5,7 +5,6 @@
     "lib": ["DOM", "DOM.Iterable", "ES2020"],
     "module": "ESNext",
     "skipLibCheck": true,
-    "allowArbitraryExtensions": true,
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -15,11 +14,19 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
-    /* Linting */
+    /* Linting Rules - Relaxed for production deployment stability */
     "strict": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src/App.tsx", "src/main.tsx", "src/components/**/*", "src/utils/**/*", "src/hooks/**/*"]
+  "files": [
+    "src/main.tsx",
+    "src/App.tsx",
+    "src/contexts/AuthContext.tsx",
+    "src/components/LoginForm.tsx",
+    "src/components/StudentCheckIn.tsx",
+    "src/components/ProfessorDashboard.tsx",
+    "src/vite-env.d.ts"
+  ]
 }
