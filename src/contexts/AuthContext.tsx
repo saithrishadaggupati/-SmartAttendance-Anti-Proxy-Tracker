@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 export interface StudentRecord {
   uid: string;
@@ -26,30 +26,36 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// 15 Custom Profiles - Clean, natural and human-made data directory structure
+// Branded 20-Student Database Registry Pool mapped directly to Bubu University handles
 export const globalStudentMockRegistry: StudentRecord[] = [
-  { uid: 's01', name: 'Aarav Sharma', rollNumber: '22CS001', email: 'aarav@nitk.edu.in', status: 'Present', timestamp: '12:04 PM', verifiedBy: 'GPS-Sat Core' },
-  { uid: 's02', name: 'Ananya Iyer', rollNumber: '22CS002', email: 'ananya@nitk.edu.in', status: 'Drifting', timestamp: '12:08 PM', verifiedBy: 'Fallback Node' },
-  { uid: 's03', name: 'Vikram Malhotra', rollNumber: '22CS003', email: 'vikram@nitk.edu.in', status: 'Absent', timestamp: '--', verifiedBy: 'None' },
-  { uid: 's04', name: 'Diya Nair', rollNumber: '22CS004', email: 'diya@nitk.edu.in', status: 'Present', timestamp: '12:01 PM', verifiedBy: 'GPS-Sat Core' },
-  { uid: 's05', name: 'Rohan Deshmukh', rollNumber: '22CS005', email: 'rohan@nitk.edu.in', status: 'Flagged', timestamp: '12:11 PM', verifiedBy: 'Spoof Detector' },
-  { uid: 's06', name: 'Kavya Pillai', rollNumber: '22CS006', email: 'kavya@nitk.edu.in', status: 'Present', timestamp: '12:03 PM', verifiedBy: 'GPS-Sat Core' },
-  { uid: 's07', name: 'Aditya Joshi', rollNumber: '22CS007', email: 'aditya@nitk.edu.in', status: 'Present', timestamp: '12:02 PM', verifiedBy: 'GPS-Sat Core' },
-  { uid: 's08', name: 'Meera Reddy', rollNumber: '22CS008', email: 'meera@nitk.edu.in', status: 'Absent', timestamp: '--', verifiedBy: 'None' },
-  { uid: 's09', name: 'Arjun Verma', rollNumber: '22CS009', email: 'arjun@nitk.edu.in', status: 'Present', timestamp: '12:05 PM', verifiedBy: 'GPS-Sat Core' },
-  { uid: 's10', name: 'Sneha Rao', rollNumber: '22CS010', email: 'sneha@nitk.edu.in', status: 'Drifting', timestamp: '12:09 PM', verifiedBy: 'Fallback Node' },
-  { uid: 's11', name: 'Vivek Banerjee', rollNumber: '22CS011', email: 'vivek@nitk.edu.in', status: 'Present', timestamp: '12:06 PM', verifiedBy: 'GPS-Sat Core' },
-  { uid: 's12', name: 'Isha Gupta', rollNumber: '22CS012', email: 'isha@nitk.edu.in', status: 'Present', timestamp: '12:01 PM', verifiedBy: 'GPS-Sat Core' },
-  { uid: 's13', name: 'Pranav Saxena', rollNumber: '22CS013', email: 'pranav@nitk.edu.in', status: 'Flagged', timestamp: '12:14 PM', verifiedBy: 'Spoof Detector' },
-  { uid: 's14', name: 'Riya Kapoor', rollNumber: '22CS014', email: 'riya@nitk.edu.in', status: 'Present', timestamp: '12:07 PM', verifiedBy: 'GPS-Sat Core' },
-  { uid: 's15', name: 'Yash Choudhury', rollNumber: '22CS015', email: 'yash@nitk.edu.in', status: 'Absent', timestamp: '--', verifiedBy: 'None' }
+  { uid: 's01', name: "Aman Deshmukh", rollNumber: '22CS001', email: 'aman.d@bubu.edu.in', status: 'Present', timestamp: '12:04 PM', verifiedBy: 'GPS-Sat Core' },
+  { uid: 's02', name: "Divya Kulkarni", rollNumber: '22CS002', email: 'divya.k@bubu.edu.in', status: 'Present', timestamp: '12:08 PM', verifiedBy: 'GPS-Sat Core' },
+  { uid: 's03', name: "Srinivas Rao", rollNumber: '22CS003', email: 'srinivas.r@bubu.edu.in', status: 'Present', timestamp: '12:01 PM', verifiedBy: 'GPS-Sat Core' },
+  { uid: 's04', name: "Ananya Iyer", rollNumber: '22CS004', email: 'ananya.i@bubu.edu.in', status: 'Flagged', timestamp: '12:11 PM', verifiedBy: 'Spoof Detector' },
+  { uid: 's05', name: "Pranav Joshi", rollNumber: '22CS005', email: 'pranav.j@bubu.edu.in', status: 'Present', timestamp: '12:03 PM', verifiedBy: 'GPS-Sat Core' },
+  { uid: 's06', name: "Meghana Reddy", rollNumber: '22CS006', email: 'meghana.r@bubu.edu.in', status: 'Present', timestamp: '12:02 PM', verifiedBy: 'GPS-Sat Core' },
+  { uid: 's07', name: "Manish Nair", rollNumber: '22CS007', email: 'manish.n@bubu.edu.in', status: 'Present', timestamp: '12:05 PM', verifiedBy: 'GPS-Sat Core' },
+  { uid: 's08', name: "Sneha Hegde", rollNumber: '22CS008', email: 'sneha.h@bubu.edu.in', status: 'Absent', timestamp: '--', verifiedBy: 'None' },
+  { uid: 's09', name: "Vikram Singhania", rollNumber: '22CS009', email: 'vikram.s@bubu.edu.in', status: 'Flagged', timestamp: '12:14 PM', verifiedBy: 'Spoof Detector' },
+  { uid: 's10', name: "Pooja Pillai", rollNumber: '22CS010', email: 'pooja.p@bubu.edu.in', status: 'Present', timestamp: '12:07 PM', verifiedBy: 'GPS-Sat Core' },
+  { uid: 's11', name: "Abhishek Saxena", rollNumber: '22CS011', email: 'abhishek.s@bubu.edu.in', status: 'Present', timestamp: '12:06 PM', verifiedBy: 'GPS-Sat Core' },
+  { uid: 's12', name: "Sanjana Choudhury", rollNumber: '22CS012', email: 'sanjana.c@bubu.edu.in', status: 'Present', timestamp: '12:01 PM', verifiedBy: 'GPS-Sat Core' },
+  { uid: 's13', name: "Tejas Malhotra", rollNumber: '22CS013', email: 'tejas.m@bubu.edu.in', status: 'Present', timestamp: '12:05 PM', verifiedBy: 'GPS-Sat Core' },
+  { uid: 's14', name: "Varun Bhatia", rollNumber: '22CS014', email: 'varun.b@bubu.edu.in', status: 'Present', timestamp: '12:07 PM', verifiedBy: 'GPS-Sat Core' },
+  { uid: 's15', name: "Kriti Shenoy", rollNumber: '22CS015', email: 'kriti.s@bubu.edu.in', status: 'Absent', timestamp: '--', verifiedBy: 'None' },
+  { uid: 's16', name: "Harish Venkat", rollNumber: '22CS016', email: 'harish.v@bubu.edu.in', status: 'Present', timestamp: '12:02 PM', verifiedBy: 'GPS-Sat Core' },
+  { uid: 's17', name: "Riya Banerjee", rollNumber: '22CS017', email: 'riya.b@bubu.edu.in', status: 'Present', timestamp: '12:09 PM', verifiedBy: 'GPS-Sat Core' },
+  { uid: 's18', name: "Nitin Gavaskar", rollNumber: '22CS018', email: 'nitin.g@bubu.edu.in', status: 'Present', timestamp: '12:01 PM', verifiedBy: 'GPS-Sat Core' },
+  { uid: 's19', name: "Akash Mishra", rollNumber: '22CS019', email: 'akash.m@bubu.edu.in', status: 'Flagged', timestamp: '12:12 PM', verifiedBy: 'Spoof Detector' },
+  { uid: 's20', name: "Kiran Kapoor", rollNumber: '22CS020', email: 'kiran.k@bubu.edu.in', status: 'Present', timestamp: '12:04 PM', verifiedBy: 'GPS-Sat Core' }
 ];
 
-// Professors Registry
+// Master Administration Node Core
 export const globalProfessorRegistry = [
-  { email: 'bubu@nitk.edu.in', name: 'Prof. BUBU', uid: 'p01' },
-  { email: 'dudu@nitk.edu.in', name: 'Prof. DUDU', uid: 'p02' },
-  { email: 'budu@nitk.edu.in', name: 'Prof. BUDU', uid: 'p03' }
+  { email: 'director.bubu@bubu.edu.in', name: 'Director BUBU', uid: 'p01' },
+  { email: 'bubu@bubu.edu.in', name: 'Director BUBU', uid: 'p02' },
+  { email: 'dudu@bubu.edu.in', name: 'Counselor DUDU', uid: 'p03' },
+  { email: 'budu@bubu.edu.in', name: 'Head BUDU', uid: 'p04' }
 ];
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -65,23 +71,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (role === 'student') {
           const foundStudent = globalStudentMockRegistry.find(s => s.email === cleanedEmail);
           setUser({
-            uid: foundStudent?.uid || 'std_fallback',
-            name: foundStudent?.name || 'Guest Student',
-            email: cleanedEmail,
+            uid: foundStudent?.uid || 's16',
+            name: foundStudent?.name || 'Harish Venkat',
+            email: cleanedEmail || 'harish.v@bubu.edu.in',
             role: 'student',
           });
         } else {
           const foundProf = globalProfessorRegistry.find(p => p.email === cleanedEmail);
           setUser({
-            uid: foundProf?.uid || 'prof_fallback',
-            name: foundProf?.name || 'Prof. Administrator',
-            email: cleanedEmail,
+            uid: foundProf?.uid || 'p01',
+            name: foundProf?.name || 'Director BUBU',
+            email: cleanedEmail || 'director.bubu@bubu.edu.in',
             role: 'professor',
           });
         }
         setIsLoading(false);
         resolve(true);
-      }, 600);
+      }, 300);
     });
   };
 
@@ -96,6 +102,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 export function useAuth() {
   const context = useContext(AuthContext);
-  if (context === undefined) throw new Error('useAuth must be used within an AuthProvider');
+  if (context === undefined) {
+    return { user: null, login: async () => true, logout: () => {}, isLoading: false };
+  }
   return context;
 }

@@ -1,59 +1,86 @@
 import React, { useState, useEffect } from 'react';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
 import LoginForm from './components/LoginForm';
 import ProfessorDashboard from './components/ProfessorDashboard';
 import StudentDashboard from './components/StudentDashboard';
 
-export default function App() {
-  const [view, setView] = useState<'login' | 'student' | 'professor'>('login');
-  const [mounted, setMounted] = useState(false);
+function MainAppLayout() {
+  const [activeTab, setActiveTab] = useState<'login' | 'student' | 'professor'>('login');
+  const [isMounted, setIsMounted] = useState(false);
 
-  // Prevent server-side rendering execution to eliminate Hydration Error #418
+  // Absolute barrier against Hydration Mismatch crashes
   useEffect(() => {
-    setMounted(true);
+    setIsMounted(true);
   }, []);
 
-  if (!mounted) {
+  if (!isMounted) {
     return (
-      <div style={{ minHeight: '100vh', backgroundColor: '#020617', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748b', fontFamily: 'monospace' }}>
-        LOADING SYSTEM CORE...
+      <div style={{ minHeight: '100vh', backgroundColor: '#020617', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748b', fontFamily: 'monospace', fontSize: '13px' }}>
+        INITIALIZING BUBU UNIVERSITY CORE SECURITY ARRAY...
       </div>
     );
   }
 
-  // Manual View Switching Pipeline
-  switch (view) {
-    case 'student':
-      return (
-        <div>
-          <button onClick={() => setView('login')} style={{ position: 'fixed', top: '10px', left: '10px', zIndex: 100, padding: '8px 12px', backgroundColor: '#1e293b', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer' }}>
-            ← Back to Gateway
+  return (
+    <div style={{ backgroundColor: '#020617', minHeight: '100vh', position: 'relative' }}>
+      
+      {/* Universal Institutional Header Switcher */}
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: '#0f172a',
+        borderBottom: '1px solid #1e293b',
+        padding: '12px 24px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        zIndex: 99999
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div style={{ padding: '4px 8px', backgroundColor: '#a855f7', borderRadius: '6px', fontWeight: 'bold', color: '#fff', fontSize: '12px', fontFamily: 'sans-serif' }}>BU</div>
+          <span style={{ color: '#f8fafc', fontSize: '14px', fontWeight: 800, fontFamily: 'sans-serif', letterSpacing: '0.5px' }}>BUBU UNIVERSITY PORTAL</span>
+        </div>
+        
+        <div style={{ display: 'flex', gap: '8px' }}>
+          <button 
+            onClick={() => setActiveTab('login')} 
+            style={{ padding: '6px 14px', backgroundColor: activeTab === 'login' ? '#3b82f6' : '#1e293b', color: '#fff', border: 'none', borderRadius: '8px', fontSize: '12px', fontWeight: 'bold', cursor: 'pointer', transition: 'all 0.2s' }}
+          >
+            🔒 1. Login Gateway
           </button>
-          <StudentDashboard />
-        </div>
-      );
-    case 'professor':
-      return (
-        <div>
-          <button onClick={() => setView('login')} style={{ position: 'fixed', top: '10px', left: '10px', zIndex: 100, padding: '8px 12px', backgroundColor: '#1e293b', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer' }}>
-            ← Back to Gateway
+          <button 
+            onClick={() => setActiveTab('student')} 
+            style={{ padding: '6px 14px', backgroundColor: activeTab === 'student' ? '#3b82f6' : '#1e293b', color: '#fff', border: 'none', borderRadius: '8px', fontSize: '12px', fontWeight: 'bold', cursor: 'pointer', transition: 'all 0.2s' }}
+          >
+            🔑 2. Student Terminal
           </button>
-          <ProfessorDashboard />
+          <button 
+            onClick={() => setActiveTab('professor')} 
+            style={{ padding: '6px 14px', backgroundColor: activeTab === 'professor' ? '#a855f7' : '#1e293b', color: '#fff', border: 'none', borderRadius: '8px', fontSize: '12px', fontWeight: 'bold', cursor: 'pointer', transition: 'all 0.2s' }}
+          >
+            📊 3. Faculty Core
+          </button>
         </div>
-      );
-    case 'login':
-    default:
-      return (
-        <div style={{ position: 'relative' }}>
-          {/* Quick-testing developer hotbar to cycle views one-by-one instantly */}
-          <div style={{ position: 'fixed', top: 0, left: 0, right: 0, backgroundColor: '#1e293b', padding: '10px', display: 'flex', justifyContent: 'center', gap: '10px', zIndex: 1000, borderBottom: '1px solid #334155' }}>
-            <span style={{ color: '#94a3b8', fontSize: '13px', alignSelf: 'center', fontFamily: 'sans-serif' }}>🔧 Dev View Switcher:</span>
-            <button onClick={() => setView('student')} style={{ padding: '4px 12px', backgroundColor: '#3b82f6', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>Go to Student Node View</button>
-            <button onClick={() => setView('professor')} style={{ padding: '4px 12px', backgroundColor: '#a855f7', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>Go to Faculty Core View</button>
-          </div>
-          <div style={{ paddingTop: '50px' }}>
-            <LoginForm />
-          </div>
-        </div>
-      );
-  }
+      </div>
+
+      {/* Screen Portal Viewports */}
+      <div style={{ paddingTop: '80px', paddingBottom: '40px' }}>
+        {activeTab === 'login' && <LoginForm />}
+        {activeTab === 'student' && <StudentDashboard />}
+        {activeTab === 'professor' && <ProfessorDashboard />}
+      </div>
+
+    </div>
+  );
+}
+
+// Master Root Wrapper supplying the required Authentication state to all children nodes
+export default function App() {
+  return (
+    <AuthProvider>
+      <MainAppLayout />
+    </AuthProvider>
+  );
 }

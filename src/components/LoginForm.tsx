@@ -15,18 +15,22 @@ export default function LoginForm() {
 
   if (!mounted) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Fixed: Converted to async to cleanly await the AuthContext login Promise
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsConnecting(true);
 
-    setTimeout(() => {
-      // Fixed: Passed arguments matching your AuthContext expectation
-      login(
-        email || (role === 'student' ? 'harish.v@bubu.edu.in' : 'director.bubu@bubu.edu.in'),
+    try {
+      // Passes inputs directly down to the async database validation scanner
+      await login(
+        email.trim() || (role === 'student' ? 'harish.v@bubu.edu.in' : 'director.bubu@bubu.edu.in'),
         role
       );
+    } catch (err) {
+      console.error("Authentication handshake failure:", err);
+    } finally {
       setIsConnecting(false);
-    }, 500);
+    }
   };
 
   return (
