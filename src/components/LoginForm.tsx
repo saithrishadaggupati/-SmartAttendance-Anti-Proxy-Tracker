@@ -99,7 +99,7 @@ export default function LoginForm() {
             SA
           </div>
           <h2 style={{ fontSize: '26px', fontWeight: 800, color: '#ffffff', margin: '0 0 10px 0', letterSpacing: '0.5px' }}>
-            SmartAttendance
+            Smart Attendance
           </h2>
           <p style={{ fontSize: '13px', color: '#94a3b8', margin: 0, fontWeight: 500, letterSpacing: '0.2px', lineHeight: '1.5' }}>
             Anti-Proxy Verification Gateway
