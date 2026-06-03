@@ -6,33 +6,21 @@ export default function LoginForm() {
   const [role, setRole] = useState<'student' | 'professor'>('student');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
   const [isConnecting, setIsConnecting] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
     setIsConnecting(true);
 
-    if (!email) {
-      setError('An authorized institutional signature email is required.');
-      setIsConnecting(false);
-      return;
-    }
-    if (!password) {
-      setError('Security access key clearance (password) required.');
-      setIsConnecting(false);
-      return;
-    }
-
+    // Bypassed Validation: Generates dummy fallback handles if inputs are left blank
     setTimeout(() => {
       login({
-        email: email,
-        name: role === 'student' ? 'Student Node Active' : 'Director BUBU Cluster',
+        email: email || (role === 'student' ? 'harish.v@bubu.edu.in' : 'director.bubu@bubu.edu.in'),
+        name: role === 'student' ? 'Harish Venkat' : 'Director BUBU Cluster',
         role: role
       });
       setIsConnecting(false);
-    }, 1200);
+    }, 800);
   };
 
   return (
@@ -71,36 +59,66 @@ export default function LoginForm() {
           }}>
             BU
           </div>
-          <h2 style={{ fontSize: '24px', fontWeight: 900, margin: 0 }}>BUBU UNIVERSITY</h2>
+          <h2 style={{ fontSize: '24px', fontWeight: 900, margin: 0, letterSpacing: '-0.5px' }}>
+            BUBU UNIVERSITY
+          </h2>
           <p style={{ fontSize: '12px', color: '#64748b', margin: '6px 0 0 0', fontFamily: 'monospace' }}>
             IDENTITY AUTHENTICATION GATEWAY
           </p>
         </div>
 
         <div style={{ display: 'flex', backgroundColor: '#0f172a', padding: '4px', borderRadius: '12px', border: '1px solid #1e293b', marginBottom: '28px' }}>
-          <button type="button" onClick={() => { setRole('student'); setError(''); }} style={{ flex: 1, padding: '10px', borderRadius: '8px', border: 'none', backgroundColor: role === 'student' ? '#1e293b' : 'transparent', color: role === 'student' ? '#3b82f6' : '#94a3b8', fontSize: '13px', fontWeight: 'bold', cursor: 'pointer' }}>
+          <button type="button" onClick={() => setRole('student')} style={{ flex: 1, padding: '10px', borderRadius: '8px', border: 'none', backgroundColor: role === 'student' ? '#1e293b' : 'transparent', color: role === 'student' ? '#3b82f6' : '#94a3b8', fontSize: '13px', fontWeight: 'bold', cursor: 'pointer' }}>
             🔑 Student Node
           </button>
-          <button type="button" onClick={() => { setRole('professor'); setError(''); }} style={{ flex: 1, padding: '10px', borderRadius: '8px', border: 'none', backgroundColor: role === 'professor' ? '#1e293b' : 'transparent', color: role === 'professor' ? '#a855f7' : '#94a3b8', fontSize: '13px', fontWeight: 'bold', cursor: 'pointer' }}>
+          <button type="button" onClick={() => setRole('professor')} style={{ flex: 1, padding: '10px', borderRadius: '8px', border: 'none', backgroundColor: role === 'professor' ? '#1e293b' : 'transparent', color: role === 'professor' ? '#a855f7' : '#94a3b8', fontSize: '13px', fontWeight: 'bold', cursor: 'pointer' }}>
             📊 Faculty Core
           </button>
         </div>
 
-        {error && <div style={{ backgroundColor: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.2)', color: '#f87171', padding: '12px 16px', borderRadius: '12px', fontSize: '12px', marginBottom: '20px' }}>⚠️ {error}</div>}
-
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           <div>
-            <label style={{ display: 'block', fontSize: '11px', fontFamily: 'monospace', color: '#64748b', textTransform: 'uppercase', marginBottom: '6px' }}>University Email Handle</label>
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder={role === 'student' ? 'student@bubu.edu.in' : 'director.bubu@bubu.edu.in'} style={{ width: '100%', padding: '12px 16px', backgroundColor: '#090d16', border: '1px solid #1e293b', borderRadius: '12px', color: '#ffffff', fontSize: '14px', outline: 'none', boxSizing: 'border-box' }} />
+            <label style={{ display: 'block', fontSize: '11px', fontFamily: 'monospace', color: '#64748b', textTransform: 'uppercase', marginBottom: '6px' }}>
+              University Email Handle
+            </label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder={role === 'student' ? 'harish.v@bubu.edu.in' : 'director.bubu@bubu.edu.in'}
+              style={{ width: '100%', padding: '12px 16px', backgroundColor: '#090d16', border: '1px solid #1e293b', borderRadius: '12px', color: '#ffffff', fontSize: '14px', outline: 'none', boxSizing: 'border-box' }}
+            />
           </div>
 
           <div>
-            <label style={{ display: 'block', fontSize: '11px', fontFamily: 'monospace', color: '#64748b', textTransform: 'uppercase', marginBottom: '6px' }}>Security Password Key</label>
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••••••" style={{ width: '100%', padding: '12px 16px', backgroundColor: '#090d16', border: '1px solid #1e293b', borderRadius: '12px', color: '#ffffff', fontSize: '14px', outline: 'none', boxSizing: 'border-box' }} />
+            <label style={{ display: 'block', fontSize: '11px', fontFamily: 'monospace', color: '#64748b', textTransform: 'uppercase', marginBottom: '6px' }}>
+              Security Password Key
+            </label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Bypass Mode Enabled"
+              style={{ width: '100%', padding: '12px 16px', backgroundColor: '#090d16', border: '1px solid #1e293b', borderRadius: '12px', color: '#ffffff', fontSize: '14px', outline: 'none', boxSizing: 'border-box' }}
+            />
           </div>
 
-          <button type="submit" disabled={isConnecting} style={{ width: '100%', padding: '14px', background: role === 'student' ? 'linear-gradient(to right, #3b82f6, #1d4ed8)' : 'linear-gradient(to right, #a855f7, #7c3aed)', color: '#ffffff', border: 'none', borderRadius: '12px', fontSize: '14px', fontWeight: 'bold', cursor: 'pointer' }}>
-            {isConnecting ? 'Verifying Identity Vector...' : `Initialize Access as ${role === 'student' ? 'Student' : 'Professor'}`}
+          <button
+            type="submit"
+            disabled={isConnecting}
+            style={{
+              width: '100%',
+              padding: '14px',
+              background: role === 'student' ? 'linear-gradient(to right, #3b82f6, #1d4ed8)' : 'linear-gradient(to right, #a855f7, #7c3aed)',
+              color: '#ffffff',
+              border: 'none',
+              borderRadius: '12px',
+              fontSize: '14px',
+              fontWeight: 'bold',
+              cursor: 'pointer'
+            }}
+          >
+            {isConnecting ? 'Bypassing Gate Matrix...' : `Instant Login as ${role === 'student' ? 'Student' : 'Professor'}`}
           </button>
         </form>
       </div>
