@@ -70,5 +70,5 @@ I tried to keep the code as clean and modular as possible so it's easy for anyon
 
 │   └── main.tsx        # App entry point
 
-
+Documentation update for Pull Shark achievement.
 
